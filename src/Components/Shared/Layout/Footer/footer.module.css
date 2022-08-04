@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100px;
+  background-color: #2BBEBE;
+  padding: 0 30px;
+}
+
+.container h3 {
+  font-size: 25px;
+  color: white;
+}
+
+.container span {
+  font-size: 26px;
+  color: white;
+}
+
+.container button {
+  font-size: 30px;
+  background-color: #2BBEBE;
+  border: none;
+  margin-left: 10px;
+}

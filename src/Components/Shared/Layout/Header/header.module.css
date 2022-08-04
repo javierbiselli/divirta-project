@@ -1,0 +1,49 @@
+.container {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	height: 100px;
+	background-color: #2BBEBE;
+	padding: 0 25px;
+}
+
+.container h1 {
+	font-size: 25px;
+	color: white;
+}
+
+.container button {
+	font-size: 40px;
+	background-color: #2BBEBE;
+	border: none;
+}
+
+.containerNav {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+	padding: 20px;
+	position: absolute;
+	z-index: -1;
+	top: 100px;
+	height: calc(100vh - 100px);
+  font-size: 22px;
+  background: rgba(74, 147, 188, 0.35);
+}
+
+li {
+	list-style: none;
+	padding: 5px 10px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.headerBar {
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	width: 85%;
+	align-self: center;
+	margin: 25px 0;
+}
