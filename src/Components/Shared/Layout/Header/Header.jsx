@@ -1,6 +1,7 @@
 import styles from "./header.module.css";
 import { useState } from "react";
 import Login from "../../Login/Login";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
@@ -18,16 +19,16 @@ const Header = () => {
           DIVIRTA-<div>MONOS</div>
         </h1>
       </header>
-      {showNav == true ? (
+      {showNav ? (
         <nav className={styles.containerNav}>
           <div className={styles.links}>
             <ul>
-              <a href="#">
+              <Link to='/'>
                 <li>Ver salones</li>
-              </a>
-              <a href="#">
+              </Link>
+              <Link to='/post'>
                 <li>Publica tu salon</li>
-              </a>
+              </Link>
             </ul>
           </div>
           <div className={styles.headerBar}></div>

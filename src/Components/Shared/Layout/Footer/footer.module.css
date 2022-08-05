@@ -3,7 +3,8 @@
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
-  height: 100px;
+  height: 60px;
+  z-index: 1;
   background-color: #2BBEBE;
   padding: 0 30px;
 }

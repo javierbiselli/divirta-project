@@ -54,3 +54,13 @@ form input {
   text-align: end;
   font-size: 18px;
 }
+
+.containerLogged {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.containerLogged button {
+  align-self: end;
+}

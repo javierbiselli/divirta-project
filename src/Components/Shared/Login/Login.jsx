@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import styles from './login.module.css';
+import { Link } from "react-router-dom";
 
 const Login = () => {
-  // eslint-disable-next-line no-unused-vars
   const [isLogged, setIsLogged] = useState(false);
+  const submit = () => {
+    alert('usuario logueado');
+    setIsLogged(true);
+  };
+  console.log(isLogged);
   return (
     <>
-      {isLogged == false ?
+      {isLogged === false ?
         <div className={styles.container}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
-            <a href='#'>Registrate!</a>
+            <Link to='/register'>Registrate!</Link>
           </div>
           <div className={styles.log}>
             <h3>Si ya tenes</h3>
@@ -20,12 +25,16 @@ const Login = () => {
             <input type="email" placeholder="Email" />
             <input type="password" placeholder="Password" />
             <div className={styles.buttons}>
-              <a href='#'>No te acordas tu contraseña?</a>
-              <input type="submit" />
+              <Link to='/forgotpassword'>No te acordas tu contraseña?</Link>
+              <input type="submit" id="submitLogIn" onClick={() => submit()} />
             </div>
           </form>
         </div>
-        : 'user logged'}
+        : <div className={styles.containerLogged}>
+            <h2>user logged</h2>
+            <button onClick={() => setIsLogged(false)}>Salir</button>
+          </div>
+        }
     </>
   );
 };
