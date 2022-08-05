@@ -26,7 +26,7 @@ const Login = () => {
             <input type="password" placeholder="Password" />
             <div className={styles.buttons}>
               <Link to='/forgotpassword'>No te acordas tu contraseña?</Link>
-              <input type="submit" id="submitLogIn" onClick={() => submit()} />
+              <input type="submit" id="submitLogIn" value="Enviar" onClick={() => submit()} />
             </div>
           </form>
         </div>
