@@ -23,16 +23,16 @@ const Header = () => {
         <nav className={styles.containerNav}>
           <div className={styles.links}>
             <ul>
-              <Link to='/'>
+              <Link to='/' onClick={() => setShowNav(false)}>
                 <li>Ver salones</li>
               </Link>
-              <Link to='/post'>
+              <Link to='/post' onClick={() => setShowNav(false)}>
                 <li>Publica tu salon</li>
               </Link>
             </ul>
           </div>
           <div className={styles.headerBar}></div>
-          <Login />
+          <Login showNav={showNav} setShowNav={setShowNav}/>
         </nav>
       ) : (
         ""

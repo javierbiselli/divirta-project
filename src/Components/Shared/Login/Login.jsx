@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import styles from './login.module.css';
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
   const [isLogged, setIsLogged] = useState(false);
   const submit = () => {
     alert('usuario logueado');
     setIsLogged(true);
   };
-  console.log(isLogged);
+
   return (
     <>
       {isLogged === false ?
         <div className={styles.container}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
-            <Link to='/register'>Registrate!</Link>
+            <Link to='/register' onClick={() => props.setShowNav(false)}>Registrate!</Link>
           </div>
           <div className={styles.log}>
             <h3>Si ya tenes</h3>
@@ -25,7 +25,7 @@ const Login = () => {
             <input type="email" placeholder="Email" />
             <input type="password" placeholder="Password" />
             <div className={styles.buttons}>
-              <Link to='/forgotpassword'>No te acordas tu contraseña?</Link>
+              <Link to='/forgotpassword' onClick={() => props.setShowNav(false)}>No te acordas tu contraseña?</Link>
               <input type="submit" id="submitLogIn" value="Enviar" onClick={() => submit()} />
             </div>
           </form>

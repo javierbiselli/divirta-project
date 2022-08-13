@@ -4,7 +4,6 @@
   align-items: center;
 }
 
-.tableContainer {
+table {
   display: flex;
-  flex-direction: row;
 }
