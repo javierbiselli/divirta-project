@@ -1,9 +1,13 @@
-.container {
+.containerSalon {
   display: flex;
+  flex-basis: calc(100vh - 140px);
+  width: 100%;
+  text-align: center;
   flex-direction: column;
-  align-items: center;
 }
 
-table {
-  display: flex;
+.containerSalon h1 {
+  font-size: 1.6rem;
+  margin: 4%;
+  text-align: center;
 }

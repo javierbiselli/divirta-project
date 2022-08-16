@@ -1,83 +1,84 @@
 import {
-  GET_SALONS_SUCCESS,
-  GET_SALONS_PENDING,
-  GET_SALONS_ERROR,
-  DELETE_SALON_SUCCESS,
-  DELETE_SALON_PENDING,
-  DELETE_SALON_ERROR,
-  ADD_SALON_SUCCESS,
-  ADD_SALON_PENDING,
-  ADD_SALON_ERROR,
-  EDIT_SALON_SUCCESS,
-  EDIT_SALON_PENDING,
-  EDIT_SALON_ERROR
+  GET_USERS_SUCCESS,
+  GET_USERS_PENDING,
+  GET_USERS_ERROR,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_PENDING,
+  DELETE_USER_ERROR,
+  ADD_USER_SUCCESS,
+  ADD_USER_PENDING,
+  ADD_USER_ERROR,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_PENDING,
+  EDIT_USER_ERROR
 } from './constants';
 
-const initialState = {
-    list: [],
-    isLoading: false,
-    error: false
-  };
 
-  export const salonsReducer = (state = initialState, action) => {
+const initialState = {
+  list: [],
+  isLoading: false,
+  error: false
+};
+
+  export const usersReducer = (state = initialState, action) => {
     switch (action.type) {
-      case GET_SALONS_PENDING:
+      case GET_USERS_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case GET_SALONS_SUCCESS:
+    case GET_USERS_SUCCESS:
       return {
         ...state,
         list: action.payload,
         isLoading: false
       };
-    case GET_SALONS_ERROR:
+    case GET_USERS_ERROR:
       return {
         ...state,
         isLoading: false,
         error: true
       };
-    case DELETE_SALON_PENDING:
+    case DELETE_USER_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case DELETE_SALON_SUCCESS:
+    case DELETE_USER_SUCCESS:
       return {
         ...state,
         list: state.list.filter((a) => a._id !== action.payload),
         isLoading: false
       };
-    case DELETE_SALON_ERROR:
+    case DELETE_USER_ERROR:
       return {
         ...state,
         isLoading: false,
         error: true
       };
-    case ADD_SALON_PENDING:
+    case ADD_USER_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case ADD_SALON_SUCCESS:
+    case ADD_USER_SUCCESS:
       return {
         ...state,
         list: [...state.list, action.payload],
         isLoading: false
       };
-    case ADD_SALON_ERROR:
+    case ADD_USER_ERROR:
       return {
         ...state,
         isLoading: false,
         error: true
       };
-    case EDIT_SALON_PENDING:
+    case EDIT_USER_PENDING:
       return {
         ...state,
         isLoading: true
       };
-    case EDIT_SALON_SUCCESS:
+    case EDIT_USER_SUCCESS:
       return {
         ...state,
         isLoading: false,
@@ -88,7 +89,7 @@ const initialState = {
           return a;
         })
       };
-    case EDIT_SALON_ERROR:
+    case EDIT_USER_ERROR:
       return {
         ...state,
         isLoading: false,
