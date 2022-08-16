@@ -18,9 +18,9 @@ const GetSalons = () => {
     <div className={styles.containerSalon}>
       <h1>Salones mejores puntuados</h1>
       <Salon
-        name={listSalons[0].name}
-        rate={listSalons[0].rate}
-        tel={listSalons[0].tel}
+        // name={listSalons[0].name}
+        // rate={listSalons[0].rate}
+        // tel={listSalons[0].tel}
         img={"aca iria una imagen"}
         topComment={'buen salon'}/>
       <div className={styles.tableContainer}>
