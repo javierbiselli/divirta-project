@@ -7,7 +7,7 @@ import { logOut } from "../../../redux/auth/thunks";
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import firebaseApp from "../../../firebase";
-import { getUssers } from "../../../redux/users/thunks";
+import { getUsers } from "../../../redux/users/thunks";
 import { getAuth } from "firebase/auth";
 
 const Login = (props) => {
@@ -16,7 +16,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUssers());
+    dispatch(getUsers());
   }, []);
 
   const usersList = useSelector((state) => state.users.list);
@@ -53,6 +53,7 @@ const Login = (props) => {
   const onClick = async () => {
     const resp = await dispatch(logOut());
     isLogged();
+    navigate('/');
     props.setShowNav(false);
     if (!resp.error) {
       alert(resp.message);
@@ -68,15 +69,19 @@ const Login = (props) => {
     }
   };
 
-  const getUserName = () => {
-    const auth = getAuth();
+  let getUserName = () => {
+    let auth = getAuth();
+    console.log(auth);
     if (auth.currentUser) {
-      const uid = auth.currentUser.uid;
-      const user = usersList.find((user) => user.firebaseUid = uid);
+      let uid = auth.currentUser.uid;
+      let user = usersList.find((user) => user.firebaseUid == uid);
       return user.name;
     }
   };
 
+  getUserName();
+
+  console.log(getUserName());
   return (
     <>
       {!isLogged() ?

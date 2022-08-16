@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./getSalons.module.css";
-import { getSalons } from "../../redux/salons/thunks";
 import Salon from "../Shared/Salon/Salon";
+import { getSalons } from "../../redux/salons/thunks";
 
 const GetSalons = () => {
   const dispatch = useDispatch();
@@ -11,10 +11,13 @@ const GetSalons = () => {
     dispatch(getSalons());
   }, []);
 
+  const isLoading = useSelector((state) => state.salons.isLoading);
   const listSalons = useSelector((state) => state.salons.list);
   console.log(listSalons);
 
-  return (
+    return (
+    <>
+    {isLoading ? <div>cargando</div> : (
     <div className={styles.containerSalon}>
       <h1>Salones mejores puntuados</h1>
       <Salon
@@ -25,7 +28,8 @@ const GetSalons = () => {
         topComment={'buen salon'}/>
       <div className={styles.tableContainer}>
       </div>
-    </div>
+    </div>)}
+    </>
   );
 };
 
