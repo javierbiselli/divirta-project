@@ -6,14 +6,16 @@ import {
   GET_AUTH_SUCCESS,
   GET_AUTH_ERROR,
   CLEAN_ERROR,
-  SET_AUTHENTICATION
+  SET_AUTHENTICATION,
+  IS_LOGGED
 } from './constants';
 
 const initialState = {
   isLoading: false,
   authenticated: undefined,
   user: undefined,
-  error: ''
+  error: '',
+  isLogged: false
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -71,6 +73,13 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         authenticated: action.payload,
         isLoading: false
+      };
+    }
+    case IS_LOGGED: {
+      return {
+        ...state,
+        isLoading: false,
+        isLogged: true
       };
     }
     default: {

@@ -5,7 +5,8 @@ import {
   CLEAN_ERROR,
   SET_AUTHENTICATION,
   GET_AUTH_PENDING,
-  GET_AUTH_SUCCESS
+  GET_AUTH_SUCCESS,
+  IS_LOGGED
 } from './constants';
 
 export const loginPending = () => {
@@ -58,5 +59,12 @@ export const setAuthentication = (user) => {
   return {
     type: SET_AUTHENTICATION,
     payload: user
+  };
+};
+
+export const IsLogged = (logged) => {
+  return {
+    type: IS_LOGGED,
+    payload: logged
   };
 };

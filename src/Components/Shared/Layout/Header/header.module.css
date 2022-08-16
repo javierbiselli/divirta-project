@@ -28,7 +28,7 @@
   height: calc(100vh - 80px);
   top: 80px;
   font-size: 14px;
-  background: rgba(74, 147, 188, 0.70);
+  background: rgba(74, 147, 188, 0.98);
   overflow: auto;
 }
 

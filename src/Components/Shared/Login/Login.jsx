@@ -1,16 +1,25 @@
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
 import { Link } from "react-router-dom";
 import { login } from '../../../redux/auth/thunks';
 import { logOut } from "../../../redux/auth/thunks";
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import firebaseApp from "../../../firebase";
+import { getUssers } from "../../../redux/users/thunks";
+import { getAuth } from "firebase/auth";
 
 const Login = (props) => {
   const [userInput] = useState('');
-
+  let navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUssers());
+  }, []);
+
+  const usersList = useSelector((state) => state.users.list);
 
   const {
     handleSubmit,
@@ -24,38 +33,53 @@ const Login = (props) => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const user = await dispatch(login(data));
-      console.log('user', user);
       if (user.type === 'LOGIN_ERROR') {
         alert('Email o password incorrectos');
         throw user.payload;
       }
       switch (user.payload.role) {
-        case 'User':
-          setIsLogged(true);
-          break;
+        case 'USER':
+          navigate('/');
+          return data;
         default:
           break;
       }
-      setIsLogged(true);
     } catch (error) {
       console.error(error);
     }
   };
-
   const onClick = async () => {
     const resp = await dispatch(logOut());
+    isLogged();
+    props.setShowNav(false);
     if (!resp.error) {
       alert(resp.message);
-      history.push('/');
+    }
+  };
+
+  const isLogged = () => {
+    const user = firebaseApp.auth();
+    if (user._delegate.currentUser == null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const getUserName = () => {
+    const auth = getAuth();
+    if (auth.currentUser) {
+      const uid = auth.currentUser.uid;
+      const user = usersList.find((user) => user.firebaseUid = uid);
+      return user.name;
     }
   };
 
   return (
     <>
-      {isLogged === false ?
+      {!isLogged() ?
         <div className={styles.container}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
@@ -75,7 +99,7 @@ const Login = (props) => {
           </form>
         </div>
         : <div className={styles.containerLogged}>
-            <h2>user logged</h2>
+            <h2>Hola {`${getUserName() + '!'}`}</h2>
             <button onClick={() => onClick()}>Salir</button>
           </div>
         }
