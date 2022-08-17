@@ -71,7 +71,6 @@ const Login = (props) => {
 
   let getUserName = () => {
     let auth = getAuth();
-    console.log(auth);
     if (auth.currentUser) {
       let uid = auth.currentUser.uid;
       let user = usersList.find((user) => user.firebaseUid == uid);
@@ -81,7 +80,6 @@ const Login = (props) => {
 
   getUserName();
 
-  console.log(getUserName());
   return (
     <>
       {!isLogged() ?

@@ -17,12 +17,12 @@ const Register = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     const user = await dispatch(addUser(data));
-    alert('Registro correcto');
-    navigate('/');
-    if (user.error) {
-      alert(user.message);
+    if (user.message == 'The email address is already in use by another account.') {
+      alert('El email que introduciste ya esta registrado, porfavor usa otro o logueate');
+    } else {
+      alert('Registro correcto');
+      navigate('/');
     }
   };
 
