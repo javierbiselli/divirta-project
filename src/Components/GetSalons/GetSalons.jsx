@@ -13,7 +13,6 @@ const GetSalons = () => {
 
   const isLoading = useSelector((state) => state.salons.isLoading);
   const listSalons = useSelector((state) => state.salons.list);
-  console.log(listSalons);
 
     return (
     <>
@@ -25,6 +24,7 @@ const GetSalons = () => {
         name={salons.name}
         rate={salons.rate}
         tel={salons.tel}
+        salonId={salons._id}
         img={"https://www.viewhotels.jp/ryogoku/wp-content/uploads/sites/9/2020/03/test-img.jpg"}
         topComment={'falta hacer la parte de reviews'}/>)}
       <div className={styles.tableContainer}>

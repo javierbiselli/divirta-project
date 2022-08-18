@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
@@ -69,16 +70,18 @@ const Login = (props) => {
     }
   };
 
-  let getUserName = () => {
+  let getLoggedUserData = () => {
     let auth = getAuth();
     if (auth.currentUser) {
       let uid = auth.currentUser.uid;
       let user = usersList.find((user) => user.firebaseUid == uid);
-      return user.name;
+      return user;
     }
-  };
 
-  getUserName();
+  // const showProfile = () => {
+
+  // };
+};
 
   return (
     <>
@@ -102,8 +105,11 @@ const Login = (props) => {
           </form>
         </div>
         : <div className={styles.containerLogged}>
-            <h2>Hola {`${getUserName() + '!'}`}</h2>
-            <button onClick={() => onClick()}>Salir</button>
+            <h2>Hola {`${getLoggedUserData().name + '!'}`}</h2>
+            <Link to={`/users/${getLoggedUserData()._id}`} onClick={() => props.setShowNav(false)}>Ver mi perfil</Link>
+            <div className={styles.logOutContainer}>
+              <button onClick={() => onClick()}>Salir</button>
+            </div>
           </div>
         }
     </>
