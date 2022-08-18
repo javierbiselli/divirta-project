@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './login.module.css';
