@@ -6,6 +6,8 @@
   height: 80px;
   background-color: #2bbebe;
   padding: 0 25px;
+  position: fixed;
+  z-index: 10;
 }
 
 .container h1 {
@@ -24,12 +26,13 @@
   flex-direction: column;
   width: 70%;
   padding: 20px;
-  position: absolute;
-  height: calc(100vh - 80px);
+  position: fixed;
   top: 80px;
+  height: calc(100vh - 140px);
   font-size: 14px;
   background: rgba(74, 147, 188, 0.98);
   overflow: auto;
+  z-index: 6;
 }
 
 li {

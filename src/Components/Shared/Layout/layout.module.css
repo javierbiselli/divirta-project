@@ -4,3 +4,14 @@
   justify-content: space-between;
   min-height: 100vh;
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  height: calc(100vh - 140px);
+  top: 80px;
+  overflow: scroll;
+  z-index: 5
+}

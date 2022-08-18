@@ -6,11 +6,12 @@ const Salon = (props) => {
   return (
     <section>
       <h3>{props.name}</h3>
-      <div className={styles.img}>{props.img}</div>
+      <div><img className={styles.img} src={props.img}></img></div>
       <div className={styles.rateAndInfo}>
         <h4>Puntuacion: {props.rate}</h4>
-        <Link to='/moreinfo'>MAS INFO</Link>
+        <Link to={`/moreinfo/${props.salonId}`}>MAS INFO</Link>
       </div>
+      <div>{props.address}</div>
       <h4>Telefono: {props.tel}</h4>
       <div className={styles.commentContainer}>
         Comentario destacado: {props.topComment}

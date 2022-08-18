@@ -13,19 +13,20 @@ const GetSalons = () => {
 
   const isLoading = useSelector((state) => state.salons.isLoading);
   const listSalons = useSelector((state) => state.salons.list);
-  console.log(listSalons);
 
     return (
     <>
     {isLoading ? <div>cargando</div> : (
     <div className={styles.containerSalon}>
-      <h1>Salones mejores puntuados</h1>
-      <Salon
-        // name={listSalons[0].name}
-        // rate={listSalons[0].rate}
-        // tel={listSalons[0].tel}
-        img={"aca iria una imagen"}
-        topComment={'buen salon'}/>
+      <h1>Salones</h1>
+      {listSalons.map((salons) =>
+      <Salon key={salons._id}
+        name={salons.name}
+        rate={salons.rate}
+        tel={salons.tel}
+        salonId={salons._id}
+        img={"https://www.viewhotels.jp/ryogoku/wp-content/uploads/sites/9/2020/03/test-img.jpg"}
+        topComment={'falta hacer la parte de reviews'}/>)}
       <div className={styles.tableContainer}>
       </div>
     </div>)}

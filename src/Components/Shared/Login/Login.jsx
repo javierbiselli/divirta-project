@@ -69,19 +69,19 @@ const Login = (props) => {
     }
   };
 
-  let getUserName = () => {
+  let getLoggedUserData = () => {
     let auth = getAuth();
-    console.log(auth);
     if (auth.currentUser) {
       let uid = auth.currentUser.uid;
       let user = usersList.find((user) => user.firebaseUid == uid);
-      return user.name;
+      return user;
     }
-  };
 
-  getUserName();
+  // const showProfile = () => {
 
-  console.log(getUserName());
+  // };
+};
+
   return (
     <>
       {!isLogged() ?
@@ -104,8 +104,11 @@ const Login = (props) => {
           </form>
         </div>
         : <div className={styles.containerLogged}>
-            <h2>Hola {`${getUserName() + '!'}`}</h2>
-            <button onClick={() => onClick()}>Salir</button>
+            <h2>Hola {`${getLoggedUserData().name + '!'}`}</h2>
+            <Link to={`/users/${getLoggedUserData()._id}`} onClick={() => props.setShowNav(false)}>Ver mi perfil</Link>
+            <div className={styles.logOutContainer}>
+              <button onClick={() => onClick()}>Salir</button>
+            </div>
           </div>
         }
     </>
