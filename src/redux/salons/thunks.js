@@ -10,8 +10,8 @@ import {
   addSalonError,
   editSalonPending,
   editSalonSuccess,
-  editSalonError
-} from './actions';
+  editSalonError,
+} from "./actions";
 
 export const getSalons = () => {
   return async (dispatch) => {
@@ -32,7 +32,7 @@ export const deleteSalon = (_id) => {
     dispatch(deleteSalonPending());
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/salons/${_id}`, {
-        method: 'DELETE'
+        method: "DELETE",
       });
       dispatch(deleteSalonSuccess(_id));
     } catch (error) {
@@ -41,21 +41,31 @@ export const deleteSalon = (_id) => {
   };
 };
 
-export const addSalon = (salon) => {
+export const addSalon = (salon, url) => {
   return async (dispatch) => {
     dispatch(addSalonPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/salons`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-type': 'application/json'
+          "Content-type": "application/json",
         },
         body: JSON.stringify({
           name: salon.name,
-          rate: salon.rate,
           tel: salon.tel,
           address: salon.address,
-        })
+          rate: salon.rate,
+          images: [{ url }],
+          social: [
+            {
+              facebook: salon.facebook,
+              instagram: salon.instragram,
+              whatsapp: salon.whatsapp,
+              email: salon.email,
+            },
+          ],
+          description: salon.description,
+        }),
       });
       const res = await response.json();
       if (res.error) {
@@ -67,7 +77,7 @@ export const addSalon = (salon) => {
       dispatch(addSalonError(error.toString()));
       return {
         error: true,
-        message: error
+        message: error,
       };
     }
   };
@@ -77,18 +87,21 @@ export const editSalon = (salon, _id) => {
   return async (dispatch) => {
     dispatch(editSalonPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/salons/${_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: salon.name,
-          rate: salon.rate,
-          tel: salon.tel,
-          address: salon.address,
-        })
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/salons/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name: salon.name,
+            rate: salon.rate,
+            tel: salon.tel,
+            address: salon.address,
+          }),
+        }
+      );
       const res = await response.json();
       if (res.error) {
         throw res.message;
@@ -99,7 +112,7 @@ export const editSalon = (salon, _id) => {
       dispatch(editSalonError(error.toString()));
       return {
         error: true,
-        message: error
+        message: error,
       };
     }
   };

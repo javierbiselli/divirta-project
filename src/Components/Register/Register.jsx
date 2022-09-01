@@ -20,12 +20,13 @@ const Register = () => {
     const user = await dispatch(addUser(data));
     if (user.message == 'The email address is already in use by another account.') {
       alert('El email que introduciste ya esta registrado, porfavor usa otro o logueate');
+    } else if (user.error) {
+      alert(user.message);
     } else {
       alert('Registro correcto');
       navigate('/');
     }
   };
-
   return (
     <div className={styles.container}>
       <h3>Registrate</h3>

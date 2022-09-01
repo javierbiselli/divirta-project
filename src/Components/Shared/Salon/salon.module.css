@@ -1,31 +1,31 @@
 section {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    max-width: 400px;
-    text-align: start;
-    margin: 0 auto 25px auto;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 400px;
+  text-align: start;
+  margin: 0 auto 25px auto;
 }
 
 h3 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .img {
-    width: 100%;
-    max-width: 400px;
-    height: 125px;
-    object-fit: cover;
-    margin: 5px 0;
+  width: 100%;
+  max-width: 400px;
+  height: 175px;
+  object-fit: cover;
+  margin: 5px 0;
 }
 
 .rateAndInfo {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 7px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
 }
 
 .commentContainer {
-    width: 75%;
-    margin-top: 7px;
+  width: 75%;
+  margin-top: 7px;
 }

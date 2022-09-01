@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import styles from './login.module.css';
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./login.module.css";
 import { Link } from "react-router-dom";
-import { login } from '../../../redux/auth/thunks';
+import { login } from "../../../redux/auth/thunks";
 import { logOut } from "../../../redux/auth/thunks";
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import firebaseApp from "../../../firebase";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { getUsers } from "../../../redux/users/thunks";
 import { getAuth } from "firebase/auth";
 
 const Login = (props) => {
-  const [userInput] = useState('');
+  const [userInput] = useState("");
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,28 +19,28 @@ const Login = (props) => {
   }, []);
 
   const usersList = useSelector((state) => state.users.list);
+  console.log(usersList);
 
-  const {
-    handleSubmit,
-    register,
-  } = useForm({
-    mode: 'onChange',
+  const { handleSubmit, register } = useForm({
+    mode: "onChange",
     defaultValues: {
       email: userInput.email,
-      password: userInput.password
-    }
+      password: userInput.password,
+    },
   });
 
   const onSubmit = async (data) => {
     try {
       const user = await dispatch(login(data));
-      if (user.type === 'LOGIN_ERROR') {
-        alert('Email o password incorrectos');
+      if (user.type === "LOGIN_ERROR") {
+        alert("Email o password incorrectos");
         throw user.payload;
       }
       switch (user.payload.role) {
-        case 'USER':
-          navigate('/');
+        case "USER":
+          navigate("/");
+          props.setShowNav(false);
+          alert("Te logueaste con exito");
           return data;
         default:
           break;
@@ -53,7 +52,7 @@ const Login = (props) => {
   const onClick = async () => {
     const resp = await dispatch(logOut());
     isLogged();
-    navigate('/');
+    navigate("/");
     props.setShowNav(false);
     if (!resp.error) {
       alert(resp.message);
@@ -61,13 +60,33 @@ const Login = (props) => {
   };
 
   const isLogged = () => {
-    const user = firebaseApp.auth();
-    if (user._delegate.currentUser == null) {
+    const user = getAuth();
+    console.log(user);
+    if (user.currentUser == null) {
       return false;
     } else {
       return true;
     }
   };
+
+  // const auth = getAuth();
+  // console.log(auth);
+
+  // const isLogged = () => {
+  //   const auth = getAuth();
+  //   onAuthStateChanged(auth, (user) => {
+  //     console.log("user", user);
+  //     const uid = user.uid;
+  //     if (user) {
+  //       console.log(uid);
+  //       let user = usersList.find((user) => user.firebaseUid == uid);
+  //       return user;
+  //       // ...
+  //     } else {
+  //       return false;
+  //     }
+  //   });
+  // };
 
   let getLoggedUserData = () => {
     let auth = getAuth();
@@ -77,40 +96,68 @@ const Login = (props) => {
       return user;
     }
 
-  // const showProfile = () => {
+    // const showProfile = () => {
 
-  // };
-};
+    // };
+  };
 
   return (
     <>
-      {!isLogged() ?
+      {!isLogged() ? (
         <div className={styles.container}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
-            <Link to='/register' onClick={() => props.setShowNav(false)}>Registrate!</Link>
+            <Link to="/register" onClick={() => props.setShowNav(false)}>
+              Registrate!
+            </Link>
           </div>
           <div className={styles.log}>
             <h3>Si ya tenes</h3>
             <p>Logueate aca abajo!</p>
           </div>
           <form>
-            <input type="email" placeholder="Email" name="email" {...register("email")}/>
-            <input type="password" placeholder="Password" name="password" {...register("password")} />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              {...register("email")}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              {...register("password")}
+            />
             <div className={styles.buttons}>
-              <Link to='/forgotpassword' onClick={() => props.setShowNav(false)}>No te acordas tu contraseña?</Link>
-              <input type="submit" id="submitLogIn" value="Enviar" onClick={handleSubmit(onSubmit)} />
+              <Link
+                to="/forgotpassword"
+                onClick={() => props.setShowNav(false)}
+              >
+                No te acordas tu contraseña?
+              </Link>
+              <input
+                type="submit"
+                id="submitLogIn"
+                value="Enviar"
+                onClick={handleSubmit(onSubmit)}
+              />
             </div>
           </form>
         </div>
-        : <div className={styles.containerLogged}>
-            <h2>Hola {`${getLoggedUserData().name + '!'}`}</h2>
-            <Link to={`/users/${getLoggedUserData()._id}`} onClick={() => props.setShowNav(false)}>Ver mi perfil</Link>
-            <div className={styles.logOutContainer}>
-              <button onClick={() => onClick()}>Salir</button>
-            </div>
+      ) : (
+        <div className={styles.containerLogged}>
+          <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
+          <Link
+            to={`/users/${getLoggedUserData()._id}`}
+            onClick={() => props.setShowNav(false)}
+          >
+            Ver mi perfil
+          </Link>
+          <div className={styles.logOutContainer}>
+            <button onClick={() => onClick()}>Salir</button>
           </div>
-        }
+        </div>
+      )}
     </>
   );
 };
