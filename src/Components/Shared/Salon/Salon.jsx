@@ -13,6 +13,7 @@ const Salon = (props) => {
       </div>
       <div>{props.address}</div>
       <h4>Telefono: {props.tel}</h4>
+      <div>{props.description}</div>
       <div className={styles.commentContainer}>
         Comentario destacado: {props.topComment}
       </div>
