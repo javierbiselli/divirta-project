@@ -5,3 +5,5 @@
 ### You can:
 - Register and login
 - View or publish
+
+[Go to app](https://divirta-project.vercel.app/).
