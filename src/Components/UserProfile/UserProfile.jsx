@@ -22,8 +22,13 @@ const UserProfile = () => {
     return user;
   };
 
-  const date = getUserData().ownSalons[0].addedOn;
-  const dateSliced = date.slice(0, 10);
+  const sliceDate = () => {
+    const date = getUserData().ownSalons[0].addedOn;
+    if (date) {
+      const dateSliced = date.slice(0, 10);
+      return dateSliced;
+    }
+  };
 
   return (
     <>
@@ -34,12 +39,12 @@ const UserProfile = () => {
       <div>telefono: {getUserData().tel}</div>
       <div>
         Mi salon:{" "}
-        {!getUserData().ownSalons[0].id
+        {!getUserData().ownSalons[0]
           ? "no tenes ningun salon"
           : getUserData().ownSalons[0].id.name}
       </div>
       <div>
-        {!getUserData().ownSalons[0].id ? "" : `agregado el: ${dateSliced}`}
+        {!getUserData().ownSalons[0] ? "" : `agregado el: ${sliceDate()}`}
       </div>
     </>
   );
