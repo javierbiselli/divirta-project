@@ -10,57 +10,73 @@ import {
   ADD_SALON_ERROR,
   EDIT_SALON_SUCCESS,
   EDIT_SALON_PENDING,
-  EDIT_SALON_ERROR
-} from './constants';
+  EDIT_SALON_ERROR,
+  ADD_SALON_TO_USER_PENDING,
+  ADD_SALON_TO_USER_SUCCESS,
+  ADD_SALON_TO_USER_ERROR,
+} from "./constants";
 
 export const getSalonsPending = () => ({
-  type: GET_SALONS_PENDING
+  type: GET_SALONS_PENDING,
 });
 
 export const getSalonsSuccess = (salons) => ({
   type: GET_SALONS_SUCCESS,
-  payload: salons
+  payload: salons,
 });
 
 export const getSalonsError = () => ({
-  type: GET_SALONS_ERROR
+  type: GET_SALONS_ERROR,
 });
 
 export const deleteSalonPending = () => ({
-  type: DELETE_SALON_PENDING
+  type: DELETE_SALON_PENDING,
 });
 
 export const deleteSalonSuccess = (salonId) => ({
   type: DELETE_SALON_SUCCESS,
-  payload: salonId
+  payload: salonId,
 });
 
 export const deleteSalonError = () => ({
-  type: DELETE_SALON_ERROR
+  type: DELETE_SALON_ERROR,
 });
 
 export const addSalonPending = () => ({
-  type: ADD_SALON_PENDING
+  type: ADD_SALON_PENDING,
 });
 
 export const addSalonSuccess = (salon) => ({
   type: ADD_SALON_SUCCESS,
-  payload: salon
+  payload: salon,
 });
 
 export const addSalonError = () => ({
-  type: ADD_SALON_ERROR
+  type: ADD_SALON_ERROR,
 });
 
 export const editSalonPending = () => ({
-  type: EDIT_SALON_PENDING
+  type: EDIT_SALON_PENDING,
 });
 
 export const editSalonSuccess = (salon) => ({
   type: EDIT_SALON_SUCCESS,
-  payload: salon
+  payload: salon,
 });
 
 export const editSalonError = () => ({
-  type: EDIT_SALON_ERROR
+  type: EDIT_SALON_ERROR,
+});
+
+export const addSalonToUserPending = () => ({
+  type: ADD_SALON_TO_USER_PENDING,
+});
+
+export const addSalonToUserSuccess = (user) => ({
+  type: ADD_SALON_TO_USER_SUCCESS,
+  payload: user,
+});
+
+export const addSalonToUserError = () => ({
+  type: ADD_SALON_TO_USER_ERROR,
 });

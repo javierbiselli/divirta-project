@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./postSalon.module.css";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import { addSalon } from "../../redux/salons/thunks";
-import { useDispatch } from "react-redux";
+import { addSalon, getSalons, addSalonToUser } from "../../redux/salons/thunks";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
+import { getUsers } from "../../redux/users/thunks";
+import { getAuth } from "firebase/auth";
+import Modal from "../Shared/Modal/Modal";
 
 const PostSalon = () => {
   const [images, setImages] = useState(null);
   const [url, setUrl] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [children, setChildren] = useState("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers());
+    dispatch(getSalons());
+  }, []);
+
+  // const isLoading = useSelector((state) => state.salons.isLoading);
+  const usersList = useSelector((state) => state.users.list);
+  const salonsList = useSelector((state) => state.salons.list);
+
   const salonSchema = Joi.object({
     name: Joi.string().required(),
     tel: Joi.number().required(),
@@ -65,15 +80,45 @@ const PostSalon = () => {
 
   console.log(images);
 
-  const onSubmit = (data) => {
-    dispatch(addSalon(data, url));
+  const handleSalonAdd = (data) => {
     console.log(data);
+    const auth = getAuth();
+
+    const user = usersList.find(
+      (user) => user.firebaseUid === auth.currentUser.uid
+    );
+
+    try {
+      dispatch(addSalon(data, url, user._id));
+      setOpenModal(true);
+      setChildren("Salon agregado con exito");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSalonAddToUser = () => {
+    dispatch(getSalons());
+    const auth = getAuth();
+
+    const user = usersList.find(
+      (user) => user.firebaseUid === auth.currentUser.uid
+    );
+    const salon = salonsList.find((salon) => salon.owner === user._id);
+    console.log("userid", user);
+    console.log("salonid", salon);
+    try {
+      dispatch(addSalonToUser(user._id, salon._id));
+      setOpenModal(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className={styles.container}>
       <h2>Publica tu salon</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSalonAdd)}>
         <input
           type="text"
           name="name"
@@ -148,9 +193,12 @@ const PostSalon = () => {
         <input
           type="submit"
           className={styles.submit}
-          onClick={() => onSubmit()}
+          onClick={handleSalonAdd}
         />
       </form>
+      <Modal isOpen={openModal} handleClose={handleSalonAddToUser}>
+        {children}
+      </Modal>
     </div>
   );
 };

@@ -14,12 +14,13 @@ const Login = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
+  let auth = getAuth();
+
   useEffect(() => {
     dispatch(getUsers());
   }, []);
 
   const usersList = useSelector((state) => state.users.list);
-  console.log(usersList);
 
   const { handleSubmit, register } = useForm({
     mode: "onChange",
@@ -61,7 +62,6 @@ const Login = (props) => {
 
   const isLogged = () => {
     const user = getAuth();
-    console.log(user);
     if (user.currentUser == null) {
       return false;
     } else {
@@ -89,7 +89,6 @@ const Login = (props) => {
   // };
 
   let getLoggedUserData = () => {
-    let auth = getAuth();
     if (auth.currentUser) {
       let uid = auth.currentUser.uid;
       let user = usersList.find((user) => user.firebaseUid == uid);
@@ -147,10 +146,7 @@ const Login = (props) => {
       ) : (
         <div className={styles.containerLogged}>
           <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
-          <Link
-            to={`/users/${getLoggedUserData()._id}`}
-            onClick={() => props.setShowNav(false)}
-          >
+          <Link to={`/user`} onClick={() => props.setShowNav(false)}>
             Ver mi perfil
           </Link>
           <div className={styles.logOutContainer}>
