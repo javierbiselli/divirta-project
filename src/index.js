@@ -2,13 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Provider } from 'react-redux';
-import store from '../src/redux/store';
+import { Provider } from "react-redux";
+import store from "../src/redux/store";
 import Layout from "./Components/Shared/Layout/Layout";
 import GetSalons from "./Components/GetSalons/GetSalons";
 import Register from "./Components/Register/Register";
 import PostSalon from "./Components/PostSalon/PostSalon";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import UserProfile from "./Components/UserProfile/UserProfile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,10 +17,11 @@ root.render(
     <Provider store={store}>
       <Layout>
         <Routes>
-          <Route path="/" element={<GetSalons />} />
+          <Route exact path="/" element={<GetSalons />} />
           <Route path="/register" element={<Register />} />
           <Route path="/post" element={<PostSalon />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/user/" element={<UserProfile />} />
         </Routes>
       </Layout>
     </Provider>

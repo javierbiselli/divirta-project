@@ -11,6 +11,9 @@ import {
   editSalonPending,
   editSalonSuccess,
   editSalonError,
+  addSalonToUserPending,
+  addSalonToUserSuccess,
+  addSalonToUserError,
 } from "./actions";
 
 export const getSalons = () => {
@@ -41,7 +44,7 @@ export const deleteSalon = (_id) => {
   };
 };
 
-export const addSalon = (salon, url) => {
+export const addSalon = (salon, url, userId) => {
   return async (dispatch) => {
     dispatch(addSalonPending());
     try {
@@ -56,15 +59,12 @@ export const addSalon = (salon, url) => {
           address: salon.address,
           rate: salon.rate,
           images: [{ url }],
-          social: [
-            {
-              facebook: salon.facebook,
-              instagram: salon.instragram,
-              whatsapp: salon.whatsapp,
-              email: salon.email,
-            },
-          ],
+          facebook: salon.facebook,
+          instagram: salon.instagram,
+          whatsapp: salon.whatsapp,
+          email: salon.email,
           description: salon.description,
+          owner: userId,
         }),
       });
       const res = await response.json();
@@ -75,6 +75,46 @@ export const addSalon = (salon, url) => {
       return res.data;
     } catch (error) {
       dispatch(addSalonError(error.toString()));
+      return {
+        error: true,
+        message: error,
+      };
+    }
+  };
+};
+
+export const addSalonToUser = (userId, salonId) => {
+  const date = new Date();
+  console.log("date", date);
+  return async (dispatch) => {
+    dispatch(addSalonToUserPending());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/add/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            ownSalons: [
+              {
+                id: salonId,
+                addedOn: date,
+              },
+            ],
+          }),
+        }
+      );
+      const res = await response.json();
+      if (res.error) {
+        throw res.message;
+      }
+      console.log(res);
+      dispatch(addSalonToUserSuccess(res.data));
+      return res.data;
+    } catch (error) {
+      dispatch(addSalonToUserError(error.toString()));
       return {
         error: true,
         message: error,

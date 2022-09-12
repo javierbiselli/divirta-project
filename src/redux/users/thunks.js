@@ -10,13 +10,14 @@ import {
   addUserError,
   editUserPending,
   editUserSuccess,
-  editUserError
-} from './actions';
+  editUserError,
+} from "./actions";
 
 export const getUsers = () => {
   return async (dispatch) => {
     dispatch(getUsersPending());
     try {
+      console.log(process.env.REACT_APP_API_URL);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/users`);
       const res = await response.json();
       dispatch(getUsersSuccess(res.data));
@@ -32,7 +33,7 @@ export const deleteUser = (_id) => {
     dispatch(deleteUserPending());
     try {
       await fetch(`${process.env.REACT_APP_API_URL}/users/${_id}`, {
-        method: 'DELETE'
+        method: "DELETE",
       });
       dispatch(deleteUserSuccess(_id));
     } catch (error) {
@@ -46,9 +47,9 @@ export const addUser = (user) => {
     dispatch(addUserPending());
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-type': 'application/json'
+          "Content-type": "application/json",
         },
         body: JSON.stringify({
           name: user.name,
@@ -56,7 +57,9 @@ export const addUser = (user) => {
           email: user.email,
           tel: user.tel,
           password: user.password,
-        })
+          ownSalons: user.ownSalons,
+          hiredSalons: user.hiredSalons,
+        }),
       });
       const res = await response.json();
       if (res.error) {
@@ -68,7 +71,7 @@ export const addUser = (user) => {
       dispatch(addUserError(error.toString()));
       return {
         error: true,
-        message: error
+        message: error,
       };
     }
   };
@@ -78,18 +81,21 @@ export const editUser = (user, _id) => {
   return async (dispatch) => {
     dispatch(editUserPending());
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${_id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: user.name,
-          last_name: user.last_name,
-          email: user.email,
-          tel: user.tel,
-        })
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/${_id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name: user.name,
+            last_name: user.last_name,
+            email: user.email,
+            tel: user.tel,
+          }),
+        }
+      );
       const res = await response.json();
       if (res.error) {
         throw res.message;
@@ -100,7 +106,7 @@ export const editUser = (user, _id) => {
       dispatch(editUserError(error.toString()));
       return {
         error: true,
-        message: error
+        message: error,
       };
     }
   };
