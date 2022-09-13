@@ -4,6 +4,8 @@
 
 ### You can:
 - Register and login
-- View or publish
+- View salons
+- Publish multiple salons
+- View your profile
 
 [Go to app](https://divirta-project.vercel.app/).
