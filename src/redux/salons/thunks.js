@@ -45,6 +45,7 @@ export const deleteSalon = (_id) => {
 };
 
 export const addSalon = (salon, url, userId) => {
+  const date = new Date();
   return async (dispatch) => {
     dispatch(addSalonPending());
     try {
@@ -72,24 +73,9 @@ export const addSalon = (salon, url, userId) => {
         throw res.message;
       }
       dispatch(addSalonSuccess(res.data));
-      return res.data;
-    } catch (error) {
-      dispatch(addSalonError(error.toString()));
-      return {
-        error: true,
-        message: error,
-      };
-    }
-  };
-};
-
-export const addSalonToUser = (userId, salonId) => {
-  const date = new Date();
-  console.log("date", date);
-  return async (dispatch) => {
-    dispatch(addSalonToUserPending());
-    try {
-      const response = await fetch(
+      console.log(res.data);
+      dispatch(addSalonToUserPending());
+      const response2 = await fetch(
         `${process.env.REACT_APP_API_URL}/users/add/${userId}`,
         {
           method: "PUT",
@@ -99,22 +85,26 @@ export const addSalonToUser = (userId, salonId) => {
           body: JSON.stringify({
             ownSalons: [
               {
-                id: salonId,
+                id: res.data._id,
                 addedOn: date,
               },
             ],
           }),
         }
       );
-      const res = await response.json();
-      if (res.error) {
-        throw res.message;
+      const res2 = await response2.json();
+      if (res2.error) {
+        dispatch(addSalonToUserError(res2.error.toString()));
+        return {
+          error: true,
+          message: res2.error,
+        };
       }
       console.log(res);
       dispatch(addSalonToUserSuccess(res.data));
       return res.data;
     } catch (error) {
-      dispatch(addSalonToUserError(error.toString()));
+      dispatch(addSalonError(error.toString()));
       return {
         error: true,
         message: error,

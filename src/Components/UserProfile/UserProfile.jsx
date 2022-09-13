@@ -22,29 +22,25 @@ const UserProfile = () => {
     return user;
   };
 
-  const sliceDate = () => {
-    const date = getUserData().ownSalons[0].addedOn;
-    if (date) {
-      const dateSliced = date.slice(0, 10);
-      return dateSliced;
-    }
-  };
+  const userData = getUserData();
 
   return (
     <>
       <div className={styles.container}>
-        nombre: {getUserData().name + " " + getUserData().last_name}
+        nombre: {userData.name + " " + userData.last_name}
       </div>
-      <div>email: {getUserData().email}</div>
-      <div>telefono: {getUserData().tel}</div>
+      <div>email: {userData.email}</div>
+      <div>telefono: {userData.tel}</div>
       <div>
-        Mi salon:{" "}
-        {!getUserData().ownSalons[0]
+        {!userData.ownSalons[0]
           ? "no tenes ningun salon"
-          : getUserData().ownSalons[0].id.name}
-      </div>
-      <div>
-        {!getUserData().ownSalons[0] ? "" : `agregado el: ${sliceDate()}`}
+          : userData.ownSalons.map(
+              (salons) =>
+                " Salon: " +
+                salons.id.name +
+                ", agregado en: " +
+                salons.addedOn.slice(0, 10)
+            )}
       </div>
     </>
   );

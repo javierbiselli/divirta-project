@@ -17,7 +17,6 @@ export const getUsers = () => {
   return async (dispatch) => {
     dispatch(getUsersPending());
     try {
-      console.log(process.env.REACT_APP_API_URL);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/users`);
       const res = await response.json();
       dispatch(getUsersSuccess(res.data));

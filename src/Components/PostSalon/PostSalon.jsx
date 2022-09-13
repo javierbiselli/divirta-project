@@ -3,7 +3,7 @@ import styles from "./postSalon.module.css";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import { addSalon, getSalons, addSalonToUser } from "../../redux/salons/thunks";
+import { addSalon, getSalons } from "../../redux/salons/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { storage } from "../../firebase";
@@ -28,7 +28,7 @@ const PostSalon = () => {
 
   // const isLoading = useSelector((state) => state.salons.isLoading);
   const usersList = useSelector((state) => state.users.list);
-  const salonsList = useSelector((state) => state.salons.list);
+  // const salonsList = useSelector((state) => state.salons.list);
 
   const salonSchema = Joi.object({
     name: Joi.string().required(),
@@ -97,23 +97,23 @@ const PostSalon = () => {
     }
   };
 
-  const handleSalonAddToUser = () => {
-    dispatch(getSalons());
-    const auth = getAuth();
+  // const handleSalonAddToUser = () => {
+  //   dispatch(getSalons());
+  //   const auth = getAuth();
 
-    const user = usersList.find(
-      (user) => user.firebaseUid === auth.currentUser.uid
-    );
-    const salon = salonsList.find((salon) => salon.owner === user._id);
-    console.log("userid", user);
-    console.log("salonid", salon);
-    try {
-      dispatch(addSalonToUser(user._id, salon._id));
-      setOpenModal(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   const user = usersList.find(
+  //     (user) => user.firebaseUid === auth.currentUser.uid
+  //   );
+  //   const salon = salonsList.find((salon) => salon.owner === user._id);
+  //   console.log("userid", user);
+  //   console.log("salonid", salon);
+  //   try {
+  //     dispatch(addSalonToUser(user._id, salon._id));
+  //     setOpenModal(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className={styles.container}>
@@ -196,7 +196,7 @@ const PostSalon = () => {
           onClick={handleSalonAdd}
         />
       </form>
-      <Modal isOpen={openModal} handleClose={handleSalonAddToUser}>
+      <Modal isOpen={openModal} handleClose={() => setOpenModal(false)}>
         {children}
       </Modal>
     </div>
