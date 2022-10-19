@@ -15,9 +15,6 @@ const GetSalons = () => {
 
   const isLoading = useSelector((state) => state.salons.isLoading);
   const listSalons = useSelector((state) => state.salons.list);
-  const usersList = useSelector((state) => state.users.list);
-  console.log(listSalons);
-  console.log(usersList);
 
   return (
     <>
@@ -34,6 +31,13 @@ const GetSalons = () => {
               tel={salons.tel}
               salonId={salons._id}
               img={salons.images[0].url}
+              address={salons.address}
+              description={salons.description}
+              email={salons.email}
+              facebook={salons.facebook}
+              instagram={salons.instagram}
+              whatsapp={salons.whatsapp}
+              owner={salons.owner.name + " " + salons.owner.last_name}
               topComment={"falta hacer la parte de reviews"}
             />
           ))}

@@ -18,7 +18,6 @@ const UserProfile = () => {
     const user = usersList.find(
       (user) => user.firebaseUid === auth.currentUser.uid
     );
-    console.log(user);
     return user;
   };
 

@@ -29,3 +29,16 @@ h3 {
   width: 75%;
   margin-top: 7px;
 }
+
+.info {
+  margin-bottom: 8px;
+}
+
+.moreInfoButton {
+  cursor: pointer;
+  color: blue;
+}
+
+.moreInfoButton:hover {
+  border-bottom: 1px solid blue;
+}
