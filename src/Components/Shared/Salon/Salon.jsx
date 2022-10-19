@@ -1,24 +1,78 @@
-import React from "react";
-import styles from './salon.module.css';
-import { Link } from "react-router-dom";
+import styles from "./salon.module.css";
+import { useState } from "react";
+import Modal from "../Modal/Modal";
 
 const Salon = (props) => {
-  return (
-    <section>
-      <h3>{props.name}</h3>
-      <div><img className={styles.img} src={props.img}></img></div>
-      <div className={styles.rateAndInfo}>
-        <h4>Puntuacion: {props.rate}</h4>
-        <Link to={`/moreinfo/${props.salonId}`}>MAS INFO</Link>
-      </div>
-      <div>{props.address}</div>
-      <h4>Telefono: {props.tel}</h4>
-      <div>{props.description}</div>
-      <div className={styles.commentContainer}>
-        Comentario destacado: {props.topComment}
-      </div>
-    </section>
+  const [openModal, setOpenModal] = useState(false);
+  const [children, setChildren] = useState("");
+
+  const setContent = () => {
+    setChildren(
+      <section>
+        <h3>{props.name}</h3>
+        <div>
+          <img className={styles.img} src={props.img}></img>
+        </div>
+        <div className={styles.rateAndInfo}>
+          <h4>Puntuacion: {props.rate}</h4>
+        </div>
+        <div className={styles.info}>
+          <b>Telefono:</b> {props.tel}
+        </div>
+        <div className={styles.info}>
+          <b>Descripcion:</b> {props.description}
+        </div>
+        <div className={styles.info}>
+          <b>Direccion</b>: {props.address}
+        </div>
+        <div className={styles.info}>
+          <b>Email</b>: {props.email}
+        </div>
+        <div className={styles.info}>
+          <b>Redes sociales:</b>
+          <div>Facebook: {props.facebook}</div>
+          <div>Instagram: {props.instagram}</div>
+          <div>Whatsapp: {props.whatsapp}</div>
+        </div>
+        <div className={styles.info}>
+          <b>Dueño</b>: {props.owner}
+        </div>
+        <div className={styles.commentContainer}>
+          Comentarios: {props.topComment}
+        </div>
+      </section>
     );
+  };
+
+  return (
+    <>
+      <section>
+        <h3>{props.name}</h3>
+        <div>
+          <img className={styles.img} src={props.img}></img>
+        </div>
+        <div className={styles.rateAndInfo}>
+          <h4>Puntuacion: {props.rate}</h4>
+          <a
+            className={styles.moreInfoButton}
+            onClick={() => {
+              setOpenModal(true);
+              setContent();
+            }}
+          >
+            MAS INFO
+          </a>
+        </div>
+        <h4>Telefono: {props.tel}</h4>
+        <div className={styles.commentContainer}>
+          Comentario destacado: {props.topComment}
+        </div>
+      </section>
+      <Modal isOpen={openModal} handleClose={() => setOpenModal(false)}>
+        {children}
+      </Modal>
+    </>
+  );
 };
 
 export default Salon;

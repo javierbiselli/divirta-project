@@ -81,7 +81,6 @@ const PostSalon = () => {
   console.log(images);
 
   const handleSalonAdd = (data) => {
-    console.log(data);
     const auth = getAuth();
 
     const user = usersList.find(
