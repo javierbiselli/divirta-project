@@ -24,10 +24,8 @@ const UserProfile = () => {
   const userData = getUserData();
 
   return (
-    <>
-      <div className={styles.container}>
-        nombre: {userData.name + " " + userData.last_name}
-      </div>
+    <div className={styles.container}>
+      nombre: {userData.name + " " + userData.last_name}
       <div>email: {userData.email}</div>
       <div>telefono: {userData.tel}</div>
       <div>
@@ -41,7 +39,7 @@ const UserProfile = () => {
                 salons.addedOn.slice(0, 10)
             )}
       </div>
-    </>
+    </div>
   );
 };
 

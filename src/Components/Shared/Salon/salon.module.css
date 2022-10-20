@@ -37,8 +37,27 @@ h3 {
 .moreInfoButton {
   cursor: pointer;
   color: blue;
+  border-bottom: 1px solid white;
 }
 
 .moreInfoButton:hover {
   border-bottom: 1px solid blue;
+}
+
+@media only screen and (min-width: 768px) {
+  section {
+    margin: 40px;
+    margin-top: 10px;
+  }
+  .sectionModal {
+    width: 100%;
+    margin: auto;
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .sectionModal {
+    margin: auto;
+  }
 }

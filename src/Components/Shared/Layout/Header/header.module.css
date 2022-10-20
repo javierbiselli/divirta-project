@@ -50,3 +50,34 @@ a {
   align-self: center;
   margin: 25px 0;
 }
+
+@media only screen and (min-width: 768px) {
+  .container h1 div {
+    display: inline;
+  }
+
+  .container {
+    justify-content: flex-end;
+    height: 40px;
+  }
+
+  .containerNav {
+    width: 20%;
+    top: 40px;
+    height: calc(100vh - 100px);
+  }
+
+  li {
+    font-size: 1.1rem;
+  }
+
+  .container button {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .containerNav {
+    width: 15%;
+  }
+}

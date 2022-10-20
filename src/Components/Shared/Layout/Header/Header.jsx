@@ -3,10 +3,24 @@ import { useState } from "react";
 import Login from "../../Login/Login";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { useEffect } from "react";
 
 const Header = () => {
   const auth = getAuth();
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(
+    window.innerWidth > 767 ? true : false
+  );
+
+  useEffect(() => {
+    wideScreen();
+  }, [showNav]);
+
+  const wideScreen = () => {
+    if (window.innerWidth > 767) {
+      setShowNav(true);
+    }
+  };
+
   return (
     <>
       <header className={styles.container}>
