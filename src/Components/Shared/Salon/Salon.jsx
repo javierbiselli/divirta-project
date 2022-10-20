@@ -8,7 +8,7 @@ const Salon = (props) => {
 
   const setContent = () => {
     setChildren(
-      <section>
+      <section className={styles.sectionModal}>
         <h3>{props.name}</h3>
         <div>
           <img className={styles.img} src={props.img}></img>

@@ -11,3 +11,24 @@
   margin: 4%;
   text-align: center;
 }
+
+@media only screen and (min-width: 768px) {
+  .containerSalon {
+    width: 80%;
+    margin-left: 20%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .containerSalon h2 {
+    font-size: 2.2rem;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .containerSalon {
+    width: 85%;
+    margin-left: 15%;
+  }
+}

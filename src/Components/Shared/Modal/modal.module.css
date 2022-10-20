@@ -14,7 +14,7 @@
 }
 
 .billboard {
-  overflow: auto;
+  overflow: hidden;
   display: flex;
   max-height: calc(80vh - 80px);
   flex-direction: column;
@@ -32,8 +32,7 @@
   font-weight: 400;
   overflow: scroll;
   color: black;
-  padding: 35px;
-  padding-bottom: 50px;
+  padding: 13px 20px;
 }
 
 .content h2 {
@@ -57,9 +56,16 @@
   border-bottom: 1px solid black;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 768px) {
+  .shade {
+    height: calc(100% - 40px);
+    top: 40px;
+  }
   .billboard {
-    max-width: 90%;
+    width: 60%;
+    margin-left: 20%;
+    max-height: 70vh;
+    padding: 20px;
   }
   .content h2 {
     font-size: 1.4rem;
@@ -71,5 +77,18 @@
 
   .content {
     padding: 5px 20px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .billboard {
+    width: 30%;
+    margin-right: 15%;
   }
 }
