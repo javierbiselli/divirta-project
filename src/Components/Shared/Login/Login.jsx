@@ -103,7 +103,7 @@ const Login = (props) => {
   return (
     <>
       {!isLogged() ? (
-        <div className={styles.container}>
+        <div className={styles.loginContainer}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
             <Link to="/register" onClick={() => props.setShowNav(false)}>
