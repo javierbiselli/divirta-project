@@ -7,10 +7,12 @@
 - View salons
 - Publish multiple salons
 - View your profile
+- Delete your salons
 
 (I know the design is ugly, but Im focusing on making the app work)
 
 log:
 20/10/2022 - Added responsiveness for tablets and desktop 
+26/10/2022 - Added delete salons button and corrected refreshing error
 
 [Go to app](https://divirta-project.vercel.app/).
