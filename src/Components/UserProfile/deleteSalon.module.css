@@ -1,0 +1,24 @@
+.deleteSalonContainer {
+  width: 100%;
+  margin: 20px;
+}
+
+.deleteSalon {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.deleteSalon div {
+  width: 75%;
+}
+
+.deleteSalon button {
+  color: white;
+  width: 30px;
+  height: 30px;
+  background-color: rgb(206, 0, 0);
+  border: none;
+  border-radius: 5px;
+}

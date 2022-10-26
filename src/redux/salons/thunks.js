@@ -14,6 +14,9 @@ import {
   addSalonToUserPending,
   addSalonToUserSuccess,
   addSalonToUserError,
+  deleteSalonFromUserPending,
+  deleteSalonFromUserSuccess,
+  deleteSalonFromUserError,
 } from "./actions";
 
 export const getSalons = () => {
@@ -30,16 +33,62 @@ export const getSalons = () => {
   };
 };
 
-export const deleteSalon = (_id) => {
+export const deleteSalon = (_id, userId) => {
+  // return async (dispatch) => {
+  //   dispatch(deleteSalonPending());
+  //   try {
+  //     await fetch(`${process.env.REACT_APP_API_URL}/salons/${_id}`, {
+  //       method: "DELETE",
+  //     });
+  //     dispatch(deleteSalonSuccess(_id));
+  //   } catch (error) {
+  //     dispatch(deleteSalonError(error.toString()));
+  //   }
+
   return async (dispatch) => {
     dispatch(deleteSalonPending());
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/salons/${_id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/salons/${_id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const res = await response.json();
+      if (res.error) {
+        throw res.message;
+      }
       dispatch(deleteSalonSuccess(_id));
+      dispatch(deleteSalonFromUserPending());
+      const response2 = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/add/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            $pop: { ownSalons: [] },
+          }),
+        }
+      );
+      const res2 = await response2.json();
+      if (res2.error) {
+        dispatch(deleteSalonFromUserError(res2.error.toString()));
+        return {
+          error: true,
+          message: res2.error,
+        };
+      }
+      console.log(res);
+      dispatch(deleteSalonFromUserSuccess(res.data));
+      return res.data;
     } catch (error) {
       dispatch(deleteSalonError(error.toString()));
+      return {
+        error: true,
+        message: error,
+      };
     }
   };
 };
@@ -73,7 +122,6 @@ export const addSalon = (salon, url, userId) => {
         throw res.message;
       }
       dispatch(addSalonSuccess(res.data));
-      console.log(res.data);
       dispatch(addSalonToUserPending());
       const response2 = await fetch(
         `${process.env.REACT_APP_API_URL}/users/add/${userId}`,

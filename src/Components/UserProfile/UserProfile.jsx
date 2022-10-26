@@ -3,15 +3,25 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../redux/users/thunks";
 import styles from "./userProfile.module.css";
+import DeleteSalon from "./DeleteSalon";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUsers);
+    dispatch(getUsers());
   }, []);
 
   const usersList = useSelector((state) => state.users.list);
+
+  const isLogged = () => {
+    const user = getAuth();
+    if (user.currentUser == null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const getUserData = () => {
     const auth = getAuth();
@@ -24,22 +34,18 @@ const UserProfile = () => {
   const userData = getUserData();
 
   return (
-    <div className={styles.container}>
-      nombre: {userData.name + " " + userData.last_name}
-      <div>email: {userData.email}</div>
-      <div>telefono: {userData.tel}</div>
-      <div>
-        {!userData.ownSalons[0]
-          ? "no tenes ningun salon"
-          : userData.ownSalons.map(
-              (salons) =>
-                " Salon: " +
-                salons.id.name +
-                ", agregado en: " +
-                salons.addedOn.slice(0, 10)
-            )}
-      </div>
-    </div>
+    <>
+      {isLogged() ? (
+        <div className={styles.profileContainer}>
+          <div>nombre: {userData.name + " " + userData.last_name}</div>
+          <div>email: {userData.email}</div>
+          <div>telefono: {userData.tel}</div>
+          <DeleteSalon userData={userData} getUserData={getUserData} />
+        </div>
+      ) : (
+        <div>espere...</div>
+      )}
+    </>
   );
 };
 

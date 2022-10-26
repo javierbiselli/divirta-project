@@ -3,7 +3,7 @@ import styles from "./postSalon.module.css";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import { addSalon, getSalons } from "../../redux/salons/thunks";
+import { addSalon } from "../../redux/salons/thunks";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { storage } from "../../firebase";
@@ -22,12 +22,9 @@ const PostSalon = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-    dispatch(getSalons());
   }, []);
 
-  // const isLoading = useSelector((state) => state.salons.isLoading);
   const usersList = useSelector((state) => state.users.list);
-  // const salonsList = useSelector((state) => state.salons.list);
 
   const salonSchema = Joi.object({
     name: Joi.string().required(),

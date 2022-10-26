@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
@@ -14,13 +15,9 @@ const Login = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  let auth = getAuth();
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
   const usersList = useSelector((state) => state.users.list);
+  const isLoading = useSelector((state) => state.users.isLoading);
+  console.log(isLoading);
 
   const { handleSubmit, register } = useForm({
     mode: "onChange",
@@ -50,7 +47,7 @@ const Login = (props) => {
       console.error(error);
     }
   };
-  const onClick = async () => {
+  const onLogOut = async () => {
     const resp = await dispatch(logOut());
     isLogged();
     navigate("/");
@@ -89,20 +86,27 @@ const Login = (props) => {
   // };
 
   let getLoggedUserData = () => {
+    const auth = getAuth();
     if (auth.currentUser) {
       let uid = auth.currentUser.uid;
       let user = usersList.find((user) => user.firebaseUid == uid);
       return user;
     }
-
-    // const showProfile = () => {
-
-    // };
   };
 
   return (
     <>
-      {!isLogged() ? (
+      {isLogged() && !isLoading ? (
+        <div className={styles.containerLogged}>
+          <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
+          <Link to={`/user`} onClick={() => props.setShowNav(false)}>
+            Ver mi perfil
+          </Link>
+          <div className={styles.logOutContainer}>
+            <button onClick={() => onLogOut()}>Salir</button>
+          </div>
+        </div>
+      ) : (
         <div className={styles.loginContainer}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
@@ -112,7 +116,7 @@ const Login = (props) => {
           </div>
           <div className={styles.log}>
             <h3>Si ya tenes</h3>
-            <p>Logueate aca abajo!</p>
+            <p>Logueate aca</p>
           </div>
           <form>
             <input
@@ -142,16 +146,6 @@ const Login = (props) => {
               />
             </div>
           </form>
-        </div>
-      ) : (
-        <div className={styles.containerLogged}>
-          <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
-          <Link to={`/user`} onClick={() => props.setShowNav(false)}>
-            Ver mi perfil
-          </Link>
-          <div className={styles.logOutContainer}>
-            <button onClick={() => onClick()}>Salir</button>
-          </div>
         </div>
       )}
     </>

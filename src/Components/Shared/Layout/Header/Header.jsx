@@ -4,12 +4,15 @@ import Login from "../../Login/Login";
 import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const auth = getAuth();
   const [showNav, setShowNav] = useState(
     window.innerWidth > 767 ? true : false
   );
+
+  const isLoading = useSelector((state) => state.salons.isLoading);
 
   useEffect(() => {
     wideScreen();
@@ -24,13 +27,20 @@ const Header = () => {
   return (
     <>
       <header className={styles.container}>
-        <button
-          onClick={
-            showNav == false ? () => setShowNav(true) : () => setShowNav(false)
-          }
-        >
-          <i className="fa-solid fa-bars"></i>
-        </button>
+        {isLoading ? (
+          <div></div>
+        ) : (
+          <button
+            onClick={
+              showNav == false
+                ? () => setShowNav(true)
+                : () => setShowNav(false)
+            }
+          >
+            <i className="fa-solid fa-bars"></i>
+          </button>
+        )}
+
         <h1>
           DIVIRTA-<div>MONOS</div>
         </h1>

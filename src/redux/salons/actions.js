@@ -14,6 +14,9 @@ import {
   ADD_SALON_TO_USER_PENDING,
   ADD_SALON_TO_USER_SUCCESS,
   ADD_SALON_TO_USER_ERROR,
+  DELETE_SALON_FROM_USER_SUCCESS,
+  DELETE_SALON_FROM_USER_PENDING,
+  DELETE_SALON_FROM_USER_ERROR,
 } from "./constants";
 
 export const getSalonsPending = () => ({
@@ -79,4 +82,17 @@ export const addSalonToUserSuccess = (user) => ({
 
 export const addSalonToUserError = () => ({
   type: ADD_SALON_TO_USER_ERROR,
+});
+
+export const deleteSalonFromUserPending = () => ({
+  type: DELETE_SALON_FROM_USER_PENDING,
+});
+
+export const deleteSalonFromUserSuccess = (user) => ({
+  type: DELETE_SALON_FROM_USER_SUCCESS,
+  payload: user,
+});
+
+export const deleteSalonFromUserError = () => ({
+  type: DELETE_SALON_FROM_USER_ERROR,
 });
