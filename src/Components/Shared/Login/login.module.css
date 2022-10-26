@@ -1,4 +1,4 @@
-.container {
+.loginContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,9 +15,9 @@
 }
 
 .log {
-width: 100%;
-text-align: center;
-margin-top: 15px;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
 }
 
 .log h3 {
@@ -25,13 +25,13 @@ margin-top: 15px;
   margin-bottom: 15px;
 }
 
-form {
+.loginContainer form {
   display: flex;
   flex-direction: column;
   font-size: 16px;
 }
 
-form input {
+.loginContainer form input {
   width: 100%;
   height: 35px;
   margin-top: 15px;
@@ -63,7 +63,7 @@ form input {
 }
 
 .containerLogged h2 {
-  margin: 0 auto 15px auto
+  margin: 0 auto 15px auto;
 }
 
 .logOutContainer {

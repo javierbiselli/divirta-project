@@ -14,6 +14,9 @@ import {
   ADD_SALON_TO_USER_PENDING,
   ADD_SALON_TO_USER_SUCCESS,
   ADD_SALON_TO_USER_ERROR,
+  DELETE_SALON_FROM_USER_SUCCESS,
+  DELETE_SALON_FROM_USER_PENDING,
+  DELETE_SALON_FROM_USER_ERROR,
 } from "./constants";
 
 const initialState = {
@@ -107,6 +110,8 @@ export const salonsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         list: state.list.map((a) => {
+          console.log(a);
+          console.log(action);
           if (a._id === action.payload._id) {
             return action.payload;
           }
@@ -114,6 +119,24 @@ export const salonsReducer = (state = initialState, action) => {
         }),
       };
     case ADD_SALON_TO_USER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
+    case DELETE_SALON_FROM_USER_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case DELETE_SALON_FROM_USER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        list: state.list.filter((a) => a._id !== action.payload),
+      };
+
+    case DELETE_SALON_FROM_USER_ERROR:
       return {
         ...state,
         isLoading: false,
