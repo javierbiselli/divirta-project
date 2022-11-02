@@ -1,4 +1,4 @@
-section {
+.salonSection {
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -28,6 +28,7 @@ h3 {
 .commentContainer {
   width: 75%;
   margin-top: 7px;
+  margin-bottom: 7px;
 }
 
 .info {
@@ -44,15 +45,20 @@ h3 {
   border-bottom: 1px solid blue;
 }
 
+.sectionModal {
+  text-align: start;
+}
+
 @media only screen and (min-width: 768px) {
-  section {
+  .salonSection {
     margin: 40px;
     margin-top: 10px;
   }
   .sectionModal {
-    width: 100%;
+    width: auto;
     margin: auto;
     margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
 

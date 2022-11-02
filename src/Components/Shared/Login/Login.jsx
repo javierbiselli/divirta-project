@@ -17,7 +17,6 @@ const Login = (props) => {
 
   const usersList = useSelector((state) => state.users.list);
   const isLoading = useSelector((state) => state.users.isLoading);
-  console.log(isLoading);
 
   const { handleSubmit, register } = useForm({
     mode: "onChange",
