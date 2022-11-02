@@ -5,10 +5,15 @@ import Modal from "../Modal/Modal";
 const Salon = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [children, setChildren] = useState("");
+  const [closeButton, setCloseButton] = useState("Cerrar");
 
   const setContent = () => {
+    setCloseButton("Cerrar");
     setChildren(
-      <section className={styles.sectionModal}>
+      <section
+        className={styles.sectionModal}
+        onClick={() => setOpenModal(true)}
+      >
         <h3>{props.name}</h3>
         <div>
           <img className={styles.img} src={props.img}></img>
@@ -46,7 +51,7 @@ const Salon = (props) => {
 
   return (
     <>
-      <section>
+      <section className={styles.salonSection}>
         <h3>{props.name}</h3>
         <div>
           <img className={styles.img} src={props.img}></img>
@@ -68,7 +73,11 @@ const Salon = (props) => {
           Comentario destacado: {props.topComment}
         </div>
       </section>
-      <Modal isOpen={openModal} handleClose={() => setOpenModal(false)}>
+      <Modal
+        isOpen={openModal}
+        closeButton={closeButton}
+        handleClose={() => setOpenModal(false)}
+      >
         {children}
       </Modal>
     </>

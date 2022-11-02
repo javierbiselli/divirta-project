@@ -1,16 +1,23 @@
 .deleteSalonContainer {
   width: 100%;
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .deleteSalon {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
-  margin: 15px 0;
+  max-height: 150px;
+  margin: 10px 0;
+  padding: 10px 0;
+  border: 1px solid gray;
 }
 
-.deleteSalon div {
+.deleteSalon .deleteSalonBox {
   width: 75%;
 }
 
@@ -21,4 +28,30 @@
   background-color: rgb(206, 0, 0);
   border: none;
   border-radius: 5px;
+}
+
+.deleteSalonInfo {
+  margin: 5px 0;
+}
+
+.deleteSalonSectionModal {
+  text-align: start;
+}
+
+.deleteSalonInfo input {
+  width: 100%;
+  padding: 3px;
+}
+
+@media only screen and (min-width: 768px) {
+  .deleteSalonContainer {
+    flex-direction: row;
+  }
+
+  .deleteSalon {
+    width: 70%;
+    max-width: 700px;
+    margin: 10px;
+    max-height: 300px;
+  }
 }

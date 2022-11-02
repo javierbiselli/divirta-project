@@ -2,12 +2,19 @@ import React from "react";
 import styles from "./modal.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Modal = ({ children, isOpen, handleClose }) => {
+const Modal = ({
+  children,
+  isOpen,
+  handleClose,
+  closeButton,
+  okButton,
+  okButtonText,
+  onClick,
+}) => {
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          onClick={handleClose}
           initial={{
             opacity: 0,
           }}
@@ -24,7 +31,6 @@ const Modal = ({ children, isOpen, handleClose }) => {
           className={styles.shade}
         >
           <motion.div
-            onClick={isOpen}
             initial={{
               y: 800,
             }}
@@ -64,6 +70,17 @@ const Modal = ({ children, isOpen, handleClose }) => {
             >
               {children}
             </motion.div>
+            <div>
+              <button
+                onClick={onClick}
+                className={okButton ? styles.okButtonYes : styles.okButtonNot}
+              >
+                {okButtonText}
+              </button>
+              <button onClick={handleClose} className={styles.closeButton}>
+                {closeButton}
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       )}

@@ -21,6 +21,7 @@
   text-align: center;
   background-color: white;
   padding-top: 15px;
+  padding-bottom: 15px;
   border-radius: 3px;
   width: 85%;
   position: relative;
@@ -29,6 +30,8 @@
 }
 
 .content {
+  display: flex;
+  justify-content: center;
   font-weight: 400;
   overflow: scroll;
   color: black;
@@ -54,6 +57,35 @@
 .content a:hover {
   color: rgb(175, 102, 243);
   border-bottom: 1px solid black;
+}
+
+.closeButton {
+  width: 30%;
+  min-width: 100px;
+  background-color: rgb(180, 0, 0);
+  margin: 15px 30px 0 30px;
+  border-radius: 5px;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+}
+
+.okButtonNot {
+  display: none;
+}
+
+.okButtonYes {
+  width: 30%;
+  min-width: 100px;
+  background-color: rgb(0, 131, 0);
+  margin: 15px 30px 0 30px;
+  border-radius: 5px;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  cursor: pointer;
+  display: unset;
 }
 
 @media only screen and (min-width: 768px) {
