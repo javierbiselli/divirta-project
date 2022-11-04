@@ -7,12 +7,8 @@ import DeleteSalon from "./DeleteSalon";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
   const usersList = useSelector((state) => state.users.list);
+  const isLoading = useSelector((state) => state.users.isLoading);
 
   const isLogged = () => {
     const user = getAuth();
@@ -22,20 +18,28 @@ const UserProfile = () => {
       return true;
     }
   };
-
   const getUserData = () => {
     const auth = getAuth();
-    const user = usersList.find(
-      (user) => user.firebaseUid === auth.currentUser.uid
-    );
-    return user;
+    if (isLogged()) {
+      const user = usersList.find(
+        (user) => user.firebaseUid === auth.currentUser.uid
+      );
+      return user;
+    } else {
+      return false;
+    }
   };
 
   const userData = getUserData();
 
+  useEffect(() => {
+    dispatch(getUsers());
+    getUserData();
+  }, [isLoading]);
+
   return (
     <>
-      {isLogged() ? (
+      {getUserData() ? (
         <div className={styles.profileContainer}>
           <div>nombre: {userData.name + " " + userData.last_name}</div>
           <div>email: {userData.email}</div>
