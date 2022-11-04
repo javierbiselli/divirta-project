@@ -95,7 +95,7 @@ const Login = (props) => {
 
   return (
     <>
-      {isLogged() && !isLoading ? (
+      {getLoggedUserData() ? (
         <div className={styles.containerLogged}>
           <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
           <Link to={`/user`} onClick={() => props.setShowNav(false)}>
