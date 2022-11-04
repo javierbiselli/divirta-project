@@ -3,13 +3,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteSalon, editSalon } from "../../redux/salons/thunks";
 import Modal from "../Shared/Modal/Modal";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { getUsers } from "../../redux/users/thunks";
 
 const DeleteSalon = ({ userData }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const [children, setChildren] = useState("");
   const [closeButton, setCloseButton] = useState("Cerrar");
@@ -33,6 +32,8 @@ const DeleteSalon = ({ userData }) => {
         () => {
           alert("Salon borrado correctamente");
           setSalonId(null);
+          setOpenModal(false);
+          dispatch(getUsers());
         },
         () => {
           setOpenModal(true);
@@ -51,7 +52,10 @@ const DeleteSalon = ({ userData }) => {
         console.log(response);
         if (!response.error) {
           alert(`${response.name} editado con exito`);
-          navigate(0);
+          setOpenModal(false);
+          dispatch(getUsers());
+        } else {
+          alert(`${response.message}`);
         }
       });
     } catch (error) {
