@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./login.module.css";
 import { Link } from "react-router-dom";
@@ -7,7 +6,6 @@ import { login } from "../../../redux/auth/thunks";
 import { logOut } from "../../../redux/auth/thunks";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { getUsers } from "../../../redux/users/thunks";
 import { getAuth } from "firebase/auth";
 
 const Login = (props) => {
@@ -16,7 +14,6 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const usersList = useSelector((state) => state.users.list);
-  const isLoading = useSelector((state) => state.users.isLoading);
 
   const { handleSubmit, register } = useForm({
     mode: "onChange",

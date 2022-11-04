@@ -17,6 +17,7 @@ const DeleteSalon = ({ userData }) => {
   const [salonId, setSalonId] = useState(null);
   const [salonIdModal, setSalonIdModal] = useState(null);
   const [state, setState] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
 
   const data = userData.ownSalons.filter((salon) => salon.id !== null);
   const selectedSalon = data.find((salon) => salon._id === salonIdModal);
@@ -32,7 +33,6 @@ const DeleteSalon = ({ userData }) => {
         () => {
           alert("Salon borrado correctamente");
           setSalonId(null);
-          navigate(0);
         },
         () => {
           setOpenModal(true);
@@ -59,8 +59,9 @@ const DeleteSalon = ({ userData }) => {
     }
   };
 
-  if (salonId) {
+  if (deleteState) {
     handleSalonDelete();
+    setDeleteState(false);
   }
 
   const handleModal = () => {
@@ -193,6 +194,7 @@ const DeleteSalon = ({ userData }) => {
             <button
               onClick={() => {
                 setSalonId(salons.id._id);
+                setDeleteState(true);
               }}
             >
               X
