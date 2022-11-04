@@ -185,6 +185,7 @@ export const editSalon = (salon, _id) => {
         }
       );
       const res = await response.json();
+      console.log("editres", res);
       if (res.error) {
         throw res.message;
       }

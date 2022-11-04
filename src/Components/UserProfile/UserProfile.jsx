@@ -1,14 +1,18 @@
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../redux/users/thunks";
 import styles from "./userProfile.module.css";
 import DeleteSalon from "./DeleteSalon";
+import { useEffect } from "react";
+import { getUsers } from "../../redux/users/thunks";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
+
   const usersList = useSelector((state) => state.users.list);
-  const isLoading = useSelector((state) => state.users.isLoading);
 
   const isLogged = () => {
     const user = getAuth();
@@ -32,14 +36,9 @@ const UserProfile = () => {
 
   const userData = getUserData();
 
-  useEffect(() => {
-    dispatch(getUsers());
-    getUserData();
-  }, [isLoading]);
-
   return (
     <>
-      {getUserData() ? (
+      {userData ? (
         <div className={styles.profileContainer}>
           <div>nombre: {userData.name + " " + userData.last_name}</div>
           <div>email: {userData.email}</div>
