@@ -94,7 +94,7 @@ export const deleteSalon = (_id, userId) => {
 };
 
 export const addSalon = (salon, url, userId) => {
-  const date = new Date();
+  const date = new Date().toLocaleString("es-AR");
   return async (dispatch) => {
     dispatch(addSalonPending());
     try {
@@ -174,9 +174,13 @@ export const editSalon = (salon, _id) => {
           },
           body: JSON.stringify({
             name: salon.name,
-            rate: salon.rate,
             tel: salon.tel,
+            description: salon.description,
             address: salon.address,
+            email: salon.email,
+            facebook: salon.facebook,
+            instagram: salon.instagram,
+            whatsapp: salon.whatsapp,
           }),
         }
       );

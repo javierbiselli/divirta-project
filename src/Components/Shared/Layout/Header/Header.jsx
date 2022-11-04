@@ -41,9 +41,7 @@ const Header = () => {
           </button>
         )}
 
-        <h1>
-          DIVIRTA-<div>MONOS</div>
-        </h1>
+        <h1>DIVIRTA</h1>
       </header>
       {showNav ? (
         <nav className={styles.containerNav}>

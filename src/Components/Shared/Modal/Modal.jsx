@@ -7,9 +7,9 @@ const Modal = ({
   isOpen,
   handleClose,
   closeButton,
-  okButton,
-  okButtonText,
-  onClick,
+  // okButton,
+  // okButtonText,
+  // onClick,
 }) => {
   return (
     <AnimatePresence>
@@ -71,12 +71,12 @@ const Modal = ({
               {children}
             </motion.div>
             <div>
-              <button
+              {/* <button
                 onClick={onClick}
                 className={okButton ? styles.okButtonYes : styles.okButtonNot}
               >
                 {okButtonText}
-              </button>
+              </button> */}
               <button onClick={handleClose} className={styles.closeButton}>
                 {closeButton}
               </button>

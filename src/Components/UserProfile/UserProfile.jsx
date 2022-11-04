@@ -40,6 +40,7 @@ const UserProfile = () => {
           <div>nombre: {userData.name + " " + userData.last_name}</div>
           <div>email: {userData.email}</div>
           <div>telefono: {userData.tel}</div>
+          <h4>Mis salones:</h4>
           <DeleteSalon userData={userData} getUserData={getUserData} />
         </div>
       ) : (
