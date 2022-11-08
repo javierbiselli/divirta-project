@@ -16,7 +16,9 @@ const Salon = (props) => {
       >
         <h3>{props.name}</h3>
         <div>
-          <img className={styles.img} src={props.img}></img>
+          {props.img.map((url) => {
+            return <img className={styles.img} key={url} src={url}></img>;
+          })}
         </div>
         <div className={styles.rateAndInfo}>
           <h4>Puntuacion: {props.rate}</h4>
