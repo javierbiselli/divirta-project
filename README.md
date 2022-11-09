@@ -22,4 +22,6 @@ log:
 
 03/11/2022 - Delete and edit salons fully working
 
+09/11/2022 - Adding multiple images to salons working. Added slider for photos
+
 [Go to app](https://divirta-project.vercel.app/).
