@@ -12,6 +12,7 @@ import { v4 } from "uuid";
 import { getUsers } from "../../redux/users/thunks";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import ImageSlider from "../Shared/ImageSlider/ImageSlider";
 
 const PostSalon = () => {
   const navigate = useNavigate();
@@ -117,6 +118,17 @@ const PostSalon = () => {
   return (
     <div className={styles.postSalonContainer}>
       <h2>Publica tu salon</h2>
+      <div className={styles.postInputContainerFile}>
+        <b>Fotos:</b>
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          className={styles.uploadPhoto}
+          onChange={(e) => setImage(e.target.files[0])}
+        />
+        {imageList.length >= 1 ? <ImageSlider slides={imageList} /> : ""}
+      </div>
       <form onSubmit={handleSubmit(handleSalonAdd)}>
         <div className={styles.postInputContainer}>
           <input
@@ -161,7 +173,7 @@ const PostSalon = () => {
           <input
             type="text"
             name="rate"
-            placeholder="rate (no va a ir mas)"
+            placeholder="rating (no va a ir mas)"
             {...register("rate")}
           />
           {errors.rate?.message ? (
@@ -169,23 +181,6 @@ const PostSalon = () => {
           ) : (
             ""
           )}
-        </div>
-        <div className={styles.postInputContainerFile}>
-          <b>Fotos:</b>
-          <input
-            type="file"
-            name="file"
-            accept="image/*"
-            className={styles.uploadPhoto}
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-          {url
-            ? imageList.map((urls) => {
-                return (
-                  <img key={urls} src={urls} className={styles.uploadPhoto} />
-                );
-              })
-            : ""}
         </div>
         <h4>Redes sociales del salon</h4>
         <div className={styles.postInputContainer}>
