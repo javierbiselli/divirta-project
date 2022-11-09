@@ -3,14 +3,16 @@
 `Currently being developed`
 
 ### You can:
+- View party rooms and their detailed info
 - Register and login
-- View salons
-- Publish multiple salons
-- View your profile
-- Delete your salons
-- Edit your salons
+- Publish multiple party rooms with multiple photos
+- View and edit your profile
+- Delete or edit your party room data
 
-(I know the design is ugly, but Im focusing on making the app work)
+Future features to develop:
+- Review system for party rooms with ratings and comments (similar to Google)
+- Party animator/entertainer, party room owner, and common user public profiles
+- UI UX improvements
 
 log:
 
