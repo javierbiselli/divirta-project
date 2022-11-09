@@ -30,7 +30,7 @@ const GetSalons = () => {
               rate={salons.rate}
               tel={salons.tel}
               salonId={salons._id}
-              img={salons.images[0].url}
+              img={salons.images[0].url.map((urls) => urls.url)}
               address={salons.address}
               description={salons.description}
               email={salons.email}

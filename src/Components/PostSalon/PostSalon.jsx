@@ -12,11 +12,13 @@ import { v4 } from "uuid";
 import { getUsers } from "../../redux/users/thunks";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import ImageSlider from "../Shared/ImageSlider/ImageSlider";
 
 const PostSalon = () => {
   const navigate = useNavigate();
-  const [images, setImages] = useState(null);
-  const [url, setUrl] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageList, setImageList] = useState([]);
+  const [url, setUrl] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -25,6 +27,28 @@ const PostSalon = () => {
   }, []);
 
   const usersList = useSelector((state) => state.users.list);
+
+  const isLogged = () => {
+    const user = getAuth();
+    if (user.currentUser == null) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const getUserData = () => {
+    const auth = getAuth();
+    if (isLogged()) {
+      const user = usersList.find(
+        (user) => user.firebaseUid === auth.currentUser.uid
+      );
+      return user;
+    } else {
+      return false;
+    }
+  };
+
+  const userData = getUserData();
 
   const salonSchema = Joi.object({
     name: Joi.string().required(),
@@ -49,73 +73,62 @@ const PostSalon = () => {
     resolver: joiResolver(salonSchema),
   });
 
-  const handleImages = (e) => {
-    if (e.target.files[0]) {
-      setImages(e.target.files[0]);
-    }
-    uploadImg(e.target.files[0]);
-  };
+  const storageRef = ref(
+    storage,
+    `/${userData.name + userData.last_name}/${v4()}`
+  );
 
-  const uploadImg = (img) => {
-    const storageRef = ref(storage, v4());
-    uploadBytes(storageRef, img)
-      .then(() => {
-        getDownloadURL(storageRef)
+  const uploadImg = () => {
+    uploadBytes(storageRef, image)
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
           .then((url) => {
-            setUrl(url);
+            setImageList((prev) => [...prev, url]);
+            setUrl((prev) => [...prev, { url }]);
           })
           .catch((error) => {
-            alert(error.message, "error getting the image");
+            alert(error.message);
           });
-        setImages(null);
       })
       .catch((error) => {
         alert(error.message);
       });
   };
 
-  console.log(images);
+  if (image) {
+    uploadImg();
+    setImage(null);
+  }
 
   const handleSalonAdd = (data) => {
-    const auth = getAuth();
-
-    const user = usersList.find(
-      (user) => user.firebaseUid === auth.currentUser.uid
-    );
-
-    try {
-      dispatch(addSalon(data, url, user._id)).then((response) => {
-        if (!response.error) {
-          alert(`${response.name} agregado con exito`);
-          navigate("/");
-        }
-      });
-    } catch (error) {
-      console.log(error);
+    if (userData) {
+      try {
+        dispatch(addSalon(data, url, userData._id)).then((response) => {
+          if (!response.error) {
+            alert(`${response.name} agregado con exito`);
+            navigate("/");
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
-
-  // const handleSalonAddToUser = () => {
-  //   dispatch(getSalons());
-  //   const auth = getAuth();
-
-  //   const user = usersList.find(
-  //     (user) => user.firebaseUid === auth.currentUser.uid
-  //   );
-  //   const salon = salonsList.find((salon) => salon.owner === user._id);
-  //   console.log("userid", user);
-  //   console.log("salonid", salon);
-  //   try {
-  //     dispatch(addSalonToUser(user._id, salon._id));
-  //     setOpenModal(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   return (
     <div className={styles.postSalonContainer}>
       <h2>Publica tu salon</h2>
+      <div className={styles.postInputContainerFile}>
+        <b>Fotos:</b>
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          className={styles.uploadPhoto}
+          onChange={(e) => setImage(e.target.files[0])}
+        />
+        {imageList.length >= 1 ? <ImageSlider slides={imageList} /> : ""}
+      </div>
       <form onSubmit={handleSubmit(handleSalonAdd)}>
         <div className={styles.postInputContainer}>
           <input
@@ -160,7 +173,7 @@ const PostSalon = () => {
           <input
             type="text"
             name="rate"
-            placeholder="rate (no va a ir mas)"
+            placeholder="rating (no va a ir mas)"
             {...register("rate")}
           />
           {errors.rate?.message ? (
@@ -168,16 +181,6 @@ const PostSalon = () => {
           ) : (
             ""
           )}
-        </div>
-        <div className={styles.postInputContainerFile}>
-          <b>Fotos:</b>
-          <input
-            type="file"
-            name="file"
-            className={styles.uploadPhoto}
-            onChange={handleImages}
-          />
-          {url ? <img src={url} alt="" className={styles.postImage} /> : ""}
         </div>
         <h4>Redes sociales del salon</h4>
         <div className={styles.postInputContainer}>

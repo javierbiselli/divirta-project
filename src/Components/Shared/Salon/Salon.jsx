@@ -1,11 +1,14 @@
 import styles from "./salon.module.css";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
+import ImageSlider from "../ImageSlider/ImageSlider";
 
 const Salon = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const [children, setChildren] = useState("");
   const [closeButton, setCloseButton] = useState("Cerrar");
+
+  const imageList = props.img.map((images) => images);
 
   const setContent = () => {
     setCloseButton("Cerrar");
@@ -15,9 +18,7 @@ const Salon = (props) => {
         onClick={() => setOpenModal(true)}
       >
         <h3>{props.name}</h3>
-        <div>
-          <img className={styles.img} src={props.img}></img>
-        </div>
+        <ImageSlider slides={imageList} />
         <div className={styles.rateAndInfo}>
           <h4>Puntuacion: {props.rate}</h4>
         </div>

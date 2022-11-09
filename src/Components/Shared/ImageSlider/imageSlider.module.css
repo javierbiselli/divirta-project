@@ -1,0 +1,46 @@
+.sliderContainer {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  margin: 15px 0;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-position: center;
+  background-size: cover;
+}
+
+.leftArrow {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 10px;
+  font-size: 35px;
+  color: #fff;
+  z-index: 1;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.rightArrow {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 10px;
+  font-size: 35px;
+  color: #fff;
+  z-index: 1;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.leftArrowNone,
+.rightArrowNone,
+.preLoader {
+  display: none;
+}
