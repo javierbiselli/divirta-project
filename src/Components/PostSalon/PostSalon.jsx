@@ -119,17 +119,19 @@ const PostSalon = () => {
     <div className={styles.postSalonContainer}>
       <h2>Publica tu salon</h2>
       <div className={styles.postInputContainerFile}>
-        <b>Fotos:</b>
+        <b>Fotos (hasta 6):</b>
         <input
           type="file"
           name="file"
           accept="image/*"
           className={styles.uploadPhoto}
+          disabled={imageList.length > 5 ? "disabled" : ""}
           onChange={(e) => setImage(e.target.files[0])}
         />
         {imageList.length >= 1 ? <ImageSlider slides={imageList} /> : ""}
       </div>
       <form onSubmit={handleSubmit(handleSalonAdd)}>
+        <h4>Datos del salon</h4>
         <div className={styles.postInputContainer}>
           <input
             type="text"

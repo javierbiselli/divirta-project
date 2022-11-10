@@ -53,7 +53,13 @@ textarea {
 }
 
 .postInputContainerFile {
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 10px 0;
+  width: 85%;
 }
 
 .postImage {
@@ -73,7 +79,6 @@ textarea {
   }
   .postSalonContainer {
     width: 80%;
-    height: 100vh;
     margin-left: 20%;
   }
   .postSalonContainer form {
@@ -87,9 +92,6 @@ textarea {
     margin: 7px 0;
   }
 
-  .postInputContainerFile {
-    width: 100%;
-  }
   .submit {
     width: 100%;
     text-align: center;
@@ -103,5 +105,9 @@ textarea {
   .postSalonContainer {
     width: 85%;
     margin-left: 15%;
+  }
+
+  .postInputContainerFile {
+    width: 55%;
   }
 }

@@ -47,6 +47,7 @@ h3 {
 
 .sectionModal {
   text-align: start;
+  width: 100%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -55,7 +56,7 @@ h3 {
     margin-top: 10px;
   }
   .sectionModal {
-    width: auto;
+    width: 100%;
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
