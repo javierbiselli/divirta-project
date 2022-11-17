@@ -36,7 +36,6 @@
   overflow: scroll;
   color: black;
   padding: 13px 20px;
-  height: 100vh;
 }
 
 .content h2 {
@@ -122,6 +121,6 @@
 @media only screen and (min-width: 1200px) {
   .billboard {
     width: 45%;
-    margin-right: 15%;
+    margin-left: 15%;
   }
 }

@@ -6,6 +6,7 @@ import Modal from "../Shared/Modal/Modal";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { getUsers } from "../../redux/users/thunks";
+import ButtonLoader from "../Shared/Loader/ButtonLoader";
 
 const DeleteSalon = ({ userData }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const DeleteSalon = ({ userData }) => {
   const [state, setState] = useState(false);
   const [deleteState, setDeleteState] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const data = userData.ownSalons.filter((salon) => salon.id !== null);
   const selectedSalon = data.find((salon) => salon._id === salonIdModal);
 
@@ -28,14 +31,17 @@ const DeleteSalon = ({ userData }) => {
   const handleSalonDelete = () => {
     const confirmar = confirm("Estas seguro de que queres borrar el salon?");
     if (confirmar) {
+      setLoading(true);
       dispatch(deleteSalon(salonId, userData._id)).then(
         () => {
+          setLoading(false);
           alert("Salon borrado correctamente");
           setSalonId(null);
           setOpenModal(false);
           dispatch(getUsers());
         },
         () => {
+          setLoading(false);
           setOpenModal(true);
           setChildren("ocurrio un error");
           setSalonId(null);
@@ -47,9 +53,10 @@ const DeleteSalon = ({ userData }) => {
   };
 
   const handleSalonEdit = (data) => {
+    setLoading(true);
     try {
       dispatch(editSalon(data, selectedSalon.id._id)).then((response) => {
-        console.log(response);
+        setLoading(false);
         if (!response.error) {
           alert(`${response.name} editado con exito`);
           setOpenModal(false);
@@ -59,6 +66,7 @@ const DeleteSalon = ({ userData }) => {
         }
       });
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -166,12 +174,12 @@ const DeleteSalon = ({ userData }) => {
     reset();
   }
 
-  const formatDate = (date) => {
-    const year = date.slice(2, 4);
-    const month = date.slice(8, 10);
-    const day = date.slice(5, 7);
-    return `${day}/${month}/${year}`;
-  };
+  // const formatDate = (date) => {
+  //   const year = date.slice(2, 4);
+  //   const month = date.slice(8, 10);
+  //   const day = date.slice(5, 7);
+  //   return `${day}/${month}/${year}`;
+  // };
 
   return (
     <div className={styles.deleteSalonContainer}>
@@ -185,7 +193,7 @@ const DeleteSalon = ({ userData }) => {
           <div key={salons._id} className={styles.deleteSalon}>
             <div className={styles.deleteSalonBox}>
               <div>Salon: {salons.id.name}</div>
-              <div>Agregado el {formatDate(salons.addedOn.slice(0, 10))}</div>
+              <div>Agregado el {salons.addedOn.slice(0, 10)}</div>
             </div>
             <button
               onClick={() => {
@@ -206,11 +214,13 @@ const DeleteSalon = ({ userData }) => {
           </div>
         ))
       )}
+      <ButtonLoader loading={loading} />
       <Modal
         isOpen={openModal}
         closeButton={closeButton}
         okButton={okButton}
         okButtonText="Editar"
+        loading={loading}
         handleClose={() => setOpenModal(false)}
       >
         {children}

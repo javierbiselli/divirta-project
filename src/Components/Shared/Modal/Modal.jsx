@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "./modal.module.css";
 import { motion, AnimatePresence } from "framer-motion";
+import ButtonLoader from "../Loader/ButtonLoader";
 
 const Modal = ({
   children,
   isOpen,
   handleClose,
   closeButton,
+  loading,
   // okButton,
   // okButtonText,
   // onClick,
@@ -82,6 +84,7 @@ const Modal = ({
               </button>
             </div>
           </motion.div>
+          <ButtonLoader loading={loading} />
         </motion.div>
       )}
     </AnimatePresence>
