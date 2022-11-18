@@ -4,34 +4,35 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 140px);
   width: 100%;
+  height: calc(100vh - 140px);
   top: 80px;
   left: 0;
   overflow: hidden;
-  z-index: 1000;
   background-color: #000000e7;
-  overflow: hidden;
+  overflow: scroll;
   padding: 10px;
+  z-index: 1000;
 }
 
 .fullImageButton {
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
   padding: 10px;
-  z-index: 1500;
+  overflow: scroll;
+  margin-top: 10px;
 }
 
 .fullImageContainer img {
   width: 95%;
-  bottom: 60px;
-  max-height: calc(70vh);
-  z-index: 100;
+  position: relative;
   object-fit: contain;
+  overflow: scroll;
 }
 
 .fullImageContainer button {

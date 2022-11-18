@@ -14,6 +14,7 @@ import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import ImageSlider from "../Shared/ImageSlider/ImageSlider";
 import Modal from "../Shared/Modal/Modal";
+import ButtonLoader from "../Shared/Loader/ButtonLoader";
 
 const PostSalon = () => {
   const navigate = useNavigate();
@@ -259,9 +260,9 @@ const PostSalon = () => {
           <input type="submit" onClick={handleSalonAdd} />
         </div>
       </form>
+      <ButtonLoader loading={loading} />
       <Modal
         isOpen={openModal}
-        loading={loading}
         closeButton="Cerrar"
         handleClose={() => {
           setOpenModal(false);
@@ -269,7 +270,7 @@ const PostSalon = () => {
         }}
       >
         {children}
-      </Modal>{" "}
+      </Modal>
     </div>
   );
 };
