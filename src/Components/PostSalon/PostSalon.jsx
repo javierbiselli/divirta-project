@@ -13,12 +13,19 @@ import { getUsers } from "../../redux/users/thunks";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import ImageSlider from "../Shared/ImageSlider/ImageSlider";
+import Modal from "../Shared/Modal/Modal";
+import ButtonLoader from "../Shared/Loader/ButtonLoader";
 
 const PostSalon = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imageList, setImageList] = useState([]);
   const [url, setUrl] = useState([]);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [children, setChildren] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -102,14 +109,19 @@ const PostSalon = () => {
 
   const handleSalonAdd = (data) => {
     if (userData) {
+      setLoading(true);
       try {
         dispatch(addSalon(data, url, userData._id)).then((response) => {
           if (!response.error) {
-            alert(`${response.name} agregado con exito`);
-            navigate("/");
+            setLoading(false);
+            setOpenModal(true);
+            setChildren(`${response.name} agregado con exito`);
+          } else {
+            setLoading(false);
           }
         });
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -123,7 +135,7 @@ const PostSalon = () => {
         <input
           type="file"
           name="file"
-          accept="image/*"
+          accept="image/x-png,image/gif,image/jpeg"
           className={styles.uploadPhoto}
           disabled={imageList.length > 5 ? "disabled" : ""}
           onChange={(e) => setImage(e.target.files[0])}
@@ -248,6 +260,17 @@ const PostSalon = () => {
           <input type="submit" onClick={handleSalonAdd} />
         </div>
       </form>
+      <ButtonLoader loading={loading} />
+      <Modal
+        isOpen={openModal}
+        closeButton="Cerrar"
+        handleClose={() => {
+          setOpenModal(false);
+          navigate("/");
+        }}
+      >
+        {children}
+      </Modal>
     </div>
   );
 };

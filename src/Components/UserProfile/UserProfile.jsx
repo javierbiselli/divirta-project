@@ -4,6 +4,7 @@ import styles from "./userProfile.module.css";
 import DeleteSalon from "./DeleteSalon";
 import { useEffect } from "react";
 import { getUsers } from "../../redux/users/thunks";
+import Loader from "../Shared/Loader/Loader";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const UserProfile = () => {
           <DeleteSalon userData={userData} getUserData={getUserData} />
         </div>
       ) : (
-        <div>espere...</div>
+        <Loader></Loader>
       )}
     </>
   );

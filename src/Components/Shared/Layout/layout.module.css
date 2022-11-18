@@ -3,6 +3,13 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 229, 240, 1) 35%,
+    rgba(253, 202, 225, 1) 100%
+  );
 }
 
 .content {

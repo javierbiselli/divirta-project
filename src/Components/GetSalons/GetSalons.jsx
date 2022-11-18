@@ -4,6 +4,7 @@ import styles from "./getSalons.module.css";
 import Salon from "../Shared/Salon/Salon";
 import { getSalons } from "../../redux/salons/thunks";
 import { getUsers } from "../../redux/users/thunks";
+import Loader from "../Shared/Loader/Loader";
 
 const GetSalons = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const GetSalons = () => {
   return (
     <>
       {isLoading ? (
-        <div>cargando</div>
+        <Loader />
       ) : (
         <div className={styles.containerSalon}>
           <h2>Salones</h2>
