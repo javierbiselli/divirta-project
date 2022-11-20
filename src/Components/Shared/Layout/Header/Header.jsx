@@ -48,11 +48,17 @@ const Header = () => {
           <div className={styles.links}>
             <ul>
               <Link to="/" onClick={() => setShowNav(false)}>
-                <li>Ver salones</li>
+                <li>
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                  Buscar salones
+                </li>
               </Link>
               {auth.currentUser ? (
                 <Link to="/post" onClick={() => setShowNav(false)}>
-                  <li>Publica tu salon</li>
+                  <li>
+                    <i className="fa-regular fa-square-plus"></i>
+                    Publica tu salon
+                  </li>
                 </Link>
               ) : (
                 <Link to="/register" onClick={() => setShowNav(false)}>

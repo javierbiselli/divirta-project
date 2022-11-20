@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  background-color: #2bbebe;
+  background-color: #920f73;
   padding: 0 25px;
   position: fixed;
   z-index: 10;
@@ -12,32 +12,49 @@
 
 .container h1 {
   font-size: 25px;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .container button {
   font-size: 40px;
-  background-color: #2bbebe;
+  background-color: #920f73;
   border: none;
 }
 
 .containerNav {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  padding: 20px;
+  width: 60%;
+  padding: 10px;
   position: fixed;
   top: 80px;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 120px);
   font-size: 14px;
-  background: rgba(74, 147, 188, 0.98);
+  background: rgb(231, 231, 231);
   overflow: auto;
   z-index: 6;
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.527);
 }
 
-li {
+.containerNav ul {
   list-style: none;
-  padding: 5px 10px;
+  font-size: 1rem;
+  color: rgb(15, 36, 224);
+  padding: 10px 2px;
+  border-radius: 3px;
+  margin: 5px;
+  text-align: center;
+  box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.233);
+}
+
+.containerNav ul li {
+  margin: 10px 0;
+  color: rgb(119, 11, 96);
+  font-weight: 600;
+}
+
+.containerNav .links i {
+  margin-right: 8px;
 }
 
 a {
@@ -48,7 +65,7 @@ a {
   border: 1px solid rgba(0, 0, 0, 0.3);
   width: 85%;
   align-self: center;
-  margin: 25px 0;
+  margin: 20px 0;
 }
 
 @media only screen and (min-width: 768px) {
@@ -64,7 +81,7 @@ a {
   .containerNav {
     width: 20%;
     top: 40px;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 80px);
   }
 
   li {

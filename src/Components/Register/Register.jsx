@@ -4,70 +4,124 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/users/thunks";
 import { useNavigate } from "react-router-dom";
+import Joi from "joi";
+import { joiResolver } from "@hookform/resolvers/joi";
+import Input from "../Shared/Input/Input";
+import { useState } from "react";
+import ButtonLoader from "../Shared/Loader/ButtonLoader";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { handleSubmit, register } = useForm({
+  const [loading, setLoading] = useState(false);
+
+  const registrationSchema = Joi.object({
+    name: Joi.string().required().min(3).max(30),
+    last_name: Joi.string().required().min(3).max(30),
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
+    tel: Joi.number().required().max(99999999999),
+    password: Joi.string()
+      .min(6)
+      .required()
+      .regex(/^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/)
+      .messages({
+        "string.pattern.base": "Debe contener letras y al menos un numero",
+        "string.empty": "La contraseña es requerida",
+        "string.min": "Debe tener al menos 6 caracteres",
+      }),
+  });
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
+    resolver: joiResolver(registrationSchema),
   });
 
   const onSubmit = async (data) => {
-    const user = await dispatch(addUser(data));
     if (
-      user.message == "The email address is already in use by another account."
+      errors.name ||
+      errors.last_name ||
+      errors.email ||
+      errors.tel ||
+      errors.password
     ) {
-      alert(
-        "El email que introduciste ya esta registrado, porfavor usa otro o logueate"
-      );
-    } else if (user.error) {
-      alert(user.message);
+      alert("Tenes campos en rojo, porfavor revisalos");
     } else {
-      alert("Registro correcto");
-      navigate("/");
+      setLoading(true);
+      const user = await dispatch(addUser(data));
+      if (
+        user.message ==
+        "The email address is already in use by another account."
+      ) {
+        setLoading(false);
+        alert(
+          "El email que introduciste ya esta registrado, porfavor usa otro o logueate"
+        );
+      } else if (user.error) {
+        setLoading(false);
+        alert(user.message);
+      } else {
+        setLoading(false);
+        alert("Registro correcto! Ya podes loguearte");
+        navigate("/");
+      }
     }
   };
+
   return (
     <div className={styles.registerContainer}>
       <h3>Registrate</h3>
       <form>
-        <input
-          type="text"
-          placeholder="Nombre"
-          name="name"
-          {...register("name")}
+        <Input
+          type={"text"}
+          name={"name"}
+          placeholder={"Nombre"}
+          register={register}
+          error={errors.name?.message}
         />
-        <input
-          type="text"
-          placeholder="Apellido"
-          name="last_name"
-          {...register("last_name")}
+        <Input
+          type={"text"}
+          name={"last_name"}
+          placeholder={"Apellido"}
+          register={register}
+          error={errors.last_name?.message}
         />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          {...register("email")}
+        <Input
+          type={"text"}
+          name={"email"}
+          placeholder={"Email"}
+          register={register}
+          error={errors.email?.message}
         />
-        <input
-          type="number"
-          placeholder="Telefono"
-          name="tel"
-          {...register("tel")}
+        <Input
+          type={"number"}
+          name={"tel"}
+          placeholder={"Telefono (sin 0 ni 15)"}
+          register={register}
+          error={errors.tel?.message}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          {...register("password")}
+        <Input
+          type={"password"}
+          name={"password"}
+          placeholder={"Password (al menos 10 caracteres)"}
+          register={register}
+          error={errors.password?.message}
         />
+        <p>{errors.password?.message}</p>
         <input
           type="submit"
           value="Continuar"
           onClick={handleSubmit(onSubmit)}
+          className={styles.registerSubmit}
         />
       </form>
+      <ButtonLoader loading={loading} />
     </div>
   );
 };
