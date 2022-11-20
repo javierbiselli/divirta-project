@@ -110,8 +110,6 @@ export const salonsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         list: state.list.map((a) => {
-          console.log(a);
-          console.log(action);
           if (a._id === action.payload._id) {
             return action.payload;
           }

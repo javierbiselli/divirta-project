@@ -80,7 +80,6 @@ export const deleteSalon = (_id, userId) => {
           message: res2.error,
         };
       }
-      console.log(res);
       dispatch(deleteSalonFromUserSuccess(res.data));
       return res.data;
     } catch (error) {
@@ -148,7 +147,6 @@ export const addSalon = (salon, url, userId) => {
           message: res2.error,
         };
       }
-      console.log(res);
       dispatch(addSalonToUserSuccess(res.data));
       return res.data;
     } catch (error) {
@@ -185,7 +183,6 @@ export const editSalon = (salon, _id) => {
         }
       );
       const res = await response.json();
-      console.log("editres", res);
       if (res.error) {
         throw res.message;
       }
