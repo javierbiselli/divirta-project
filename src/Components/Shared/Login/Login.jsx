@@ -99,7 +99,9 @@ const Login = (props) => {
             Ver mi perfil
           </Link>
           <div className={styles.logOutContainer}>
-            <button onClick={() => onLogOut()}>Salir</button>
+            <button onClick={() => onLogOut()} className={styles.logOutButton}>
+              Salir de mi cuenta
+            </button>
           </div>
         </div>
       ) : (

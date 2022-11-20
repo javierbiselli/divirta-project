@@ -23,6 +23,14 @@
   padding: 5px;
 }
 
+.registerSubmit {
+  border-radius: 5px;
+  background-color: rgb(68, 136, 91);
+  color: white;
+  border: none;
+  height: 35px;
+}
+
 @media only screen and (min-width: 768px) {
   .registerContainer {
     width: 80%;
