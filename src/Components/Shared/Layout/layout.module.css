@@ -1,8 +1,5 @@
 .layout {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
+  height: 100vh;
   background: rgb(255, 255, 255);
   background: linear-gradient(
     180deg,
@@ -12,21 +9,26 @@
   );
 }
 
+.contentNavBarContainer {
+  width: 100%;
+  height: 100%;
+}
+
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  height: calc(100vh - 120px);
-  top: 80px;
   overflow: scroll;
   z-index: 5;
+  position: relative;
   overflow-x: hidden;
+  width: 100%;
+  height: calc(100vh - 80px);
+  top: 80px;
 }
 
 @media only screen and (min-width: 768px) {
-  .content {
-    height: calc(100vh - 80px);
-    top: 40px;
+  .contentNavBarContainer {
+    display: flex;
   }
 }

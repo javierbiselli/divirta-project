@@ -14,6 +14,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
 
   const usersList = useSelector((state) => state.users.list);
+  const isLoading = useSelector((state) => state.users.isLoading);
 
   const { handleSubmit, register } = useForm({
     mode: "onChange",
@@ -33,7 +34,6 @@ const Login = (props) => {
       switch (user.payload.role) {
         case "USER":
           navigate("/");
-          props.setShowNav(false);
           alert("Te logueaste con exito");
           return data;
         default:
@@ -47,7 +47,6 @@ const Login = (props) => {
     const resp = await dispatch(logOut());
     isLogged();
     navigate("/");
-    props.setShowNav(false);
     if (!resp.error) {
       alert(resp.message);
     }
@@ -92,12 +91,12 @@ const Login = (props) => {
 
   return (
     <>
-      {getLoggedUserData() ? (
+      {isLoading && props.showNav ? (
+        <span>CARGANDO...</span>
+      ) : getLoggedUserData() ? (
         <div className={styles.containerLogged}>
           <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
-          <Link to={`/user`} onClick={() => props.setShowNav(false)}>
-            Ver mi perfil
-          </Link>
+          <Link to={`/user`}>Ver mi perfil</Link>
           <div className={styles.logOutContainer}>
             <button onClick={() => onLogOut()} className={styles.logOutButton}>
               Salir de mi cuenta
@@ -108,9 +107,7 @@ const Login = (props) => {
         <div className={styles.loginContainer}>
           <div className={styles.register}>
             <h3>No tenes una cuenta?</h3>
-            <Link to="/register" onClick={() => props.setShowNav(false)}>
-              Registrate!
-            </Link>
+            <Link to="/register">Registrate!</Link>
           </div>
           <div className={styles.log}>
             <h3>Si ya tenes</h3>
@@ -130,12 +127,7 @@ const Login = (props) => {
               {...register("password")}
             />
             <div className={styles.buttons}>
-              <Link
-                to="/forgotpassword"
-                onClick={() => props.setShowNav(false)}
-              >
-                No te acordas tu contraseña?
-              </Link>
+              <Link to="/forgotpassword">No te acordas tu contraseña?</Link>
               <input
                 type="submit"
                 id="submitLogIn"

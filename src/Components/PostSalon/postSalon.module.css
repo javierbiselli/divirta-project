@@ -77,12 +77,20 @@
   justify-content: space-between;
 }
 
+.containerUploadImg {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.025);
+  padding: 30px 0;
+  border-radius: 15px;
+}
+
 .postInputContainerFile {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
   align-items: center;
-  width: 90%;
+  width: 95%;
   height: 100%;
 }
 
@@ -164,10 +172,6 @@
     font-size: 1.3rem;
     margin-bottom: 10px;
   }
-  .postSalonContainer {
-    width: 80%;
-    margin-left: 20%;
-  }
 
   .submit {
     width: 50%;
@@ -181,15 +185,12 @@
   .salonDescriptionContainer p {
     width: 50%;
   }
+  .postInputContainerFile {
+    width: 50%;
+    height: 75%;
+    max-width: 600px;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-  .postSalonContainer {
-    width: 85%;
-    margin-left: 15%;
-  }
-
-  .postInputContainerFile {
-    width: 55%;
-  }
 }
