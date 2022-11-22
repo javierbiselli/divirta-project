@@ -76,51 +76,53 @@ const Register = () => {
 
   return (
     <div className={styles.registerContainer}>
-      <h3>Registrate</h3>
-      <form>
-        <Input
-          type={"text"}
-          name={"name"}
-          placeholder={"Nombre"}
-          register={register}
-          error={errors.name?.message}
-        />
-        <Input
-          type={"text"}
-          name={"last_name"}
-          placeholder={"Apellido"}
-          register={register}
-          error={errors.last_name?.message}
-        />
-        <Input
-          type={"text"}
-          name={"email"}
-          placeholder={"Email"}
-          register={register}
-          error={errors.email?.message}
-        />
-        <Input
-          type={"number"}
-          name={"tel"}
-          placeholder={"Telefono (sin 0 ni 15)"}
-          register={register}
-          error={errors.tel?.message}
-        />
-        <Input
-          type={"password"}
-          name={"password"}
-          placeholder={"Password (al menos 10 caracteres)"}
-          register={register}
-          error={errors.password?.message}
-        />
-        <p>{errors.password?.message}</p>
-        <input
-          type="submit"
-          value="Continuar"
-          onClick={handleSubmit(onSubmit)}
-          className={styles.registerSubmit}
-        />
-      </form>
+      <div className={styles.registerFormContainer}>
+        <h3>Registrate</h3>
+        <form>
+          <Input
+            type={"text"}
+            name={"name"}
+            placeholder={"Nombre"}
+            register={register}
+            error={errors.name?.message}
+          />
+          <Input
+            type={"text"}
+            name={"last_name"}
+            placeholder={"Apellido"}
+            register={register}
+            error={errors.last_name?.message}
+          />
+          <Input
+            type={"text"}
+            name={"email"}
+            placeholder={"Email"}
+            register={register}
+            error={errors.email?.message}
+          />
+          <Input
+            type={"number"}
+            name={"tel"}
+            placeholder={"Telefono (sin 0 ni 15)"}
+            register={register}
+            error={errors.tel?.message}
+          />
+          <Input
+            type={"password"}
+            name={"password"}
+            placeholder={"Password (al menos 10 caracteres)"}
+            register={register}
+            error={errors.password?.message}
+          />
+          <p>{errors.password?.message}</p>
+          <input
+            type="submit"
+            value="Continuar"
+            onClick={handleSubmit(onSubmit)}
+            className={styles.registerSubmit}
+          />
+        </form>
+      </div>
       <ButtonLoader loading={loading} />
     </div>
   );

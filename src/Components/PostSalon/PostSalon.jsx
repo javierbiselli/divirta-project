@@ -192,16 +192,18 @@ const PostSalon = () => {
               : styles.postInputContainerFileHidden
           }
         >
-          <b>Fotos (hasta 6):</b>
-          <input
-            type="file"
-            name="file"
-            accept="image/x-png,image/gif,image/jpeg"
-            className={styles.uploadPhoto}
-            disabled={imageList.length > 5 ? "disabled" : ""}
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-          {imageList.length >= 1 ? <ImageSlider slides={imageList} /> : ""}
+          <div className={styles.containerUploadImg}>
+            <b>Fotos (hasta 6):</b>
+            <input
+              type="file"
+              name="file"
+              accept="image/x-png,image/gif,image/jpeg"
+              className={styles.uploadPhoto}
+              disabled={imageList.length > 5 ? "disabled" : ""}
+              onChange={(e) => setImage(e.target.files[0])}
+            />
+            {imageList.length >= 1 ? <ImageSlider slides={imageList} /> : ""}
+          </div>
         </div>
         <form
           onSubmit={handleSubmit(handleSalonAdd)}
