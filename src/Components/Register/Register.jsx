@@ -115,12 +115,14 @@ const Register = () => {
             error={errors.password?.message}
           />
           <p>{errors.password?.message}</p>
-          <input
-            type="submit"
-            value="Continuar"
-            onClick={handleSubmit(onSubmit)}
-            className={styles.registerSubmit}
-          />
+          <div className={styles.submitRegisterButtonContainer}>
+            <input
+              type="submit"
+              value="Continuar"
+              onClick={handleSubmit(onSubmit)}
+              className={styles.registerSubmit}
+            />
+          </div>
         </form>
       </div>
       <ButtonLoader loading={loading} />

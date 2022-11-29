@@ -5,7 +5,6 @@ import { deleteSalon, editSalon } from "../../redux/salons/thunks";
 import Modal from "../Shared/Modal/Modal";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { getUsers } from "../../redux/users/thunks";
 import ButtonLoader from "../Shared/Loader/ButtonLoader";
 
 const DeleteSalon = ({ userData }) => {
@@ -28,6 +27,24 @@ const DeleteSalon = ({ userData }) => {
     mode: "onChange",
   });
 
+  const deleteSalonFromLS = () => {
+    const userSalon = data.find((salon) => salonId == salon.id._id);
+    const index = data.indexOf(userSalon);
+    data.splice(index, 1);
+    userData.ownSalons = data;
+    window.localStorage.setItem("user", JSON.stringify(userData));
+  };
+
+  const editSalonFromLS = (res) => {
+    let index = data.indexOf(selectedSalon);
+    data.splice(index, 1);
+    selectedSalon.id = res;
+    data.push(selectedSalon);
+    userData.ownSalons = data;
+    window.localStorage.setItem("user", JSON.stringify(userData));
+    setSalonIdModal(null);
+  };
+
   const handleSalonDelete = () => {
     const confirmar = confirm("Estas seguro de que queres borrar el salon?");
     if (confirmar) {
@@ -38,7 +55,7 @@ const DeleteSalon = ({ userData }) => {
           alert("Salon borrado correctamente");
           setSalonId(null);
           setOpenModal(false);
-          dispatch(getUsers());
+          deleteSalonFromLS();
         },
         () => {
           setLoading(false);
@@ -60,7 +77,7 @@ const DeleteSalon = ({ userData }) => {
         if (!response.error) {
           alert(`${response.name} editado con exito`);
           setOpenModal(false);
-          dispatch(getUsers());
+          editSalonFromLS(response);
         } else {
           alert(`${response.message}`);
         }
@@ -95,7 +112,7 @@ const DeleteSalon = ({ userData }) => {
           <div className={styles.deleteSalonInfo}>
             <label htmlFor="tel">Telefono:</label>
             <input
-              type="text"
+              type="number"
               name="tel"
               defaultValue={selectedSalon.id.tel}
               {...register("tel")}

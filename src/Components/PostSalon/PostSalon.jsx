@@ -1,24 +1,24 @@
-import React, { useEffect } from "react";
 import styles from "./postSalon.module.css";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import { addSalon } from "../../redux/salons/thunks";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-import { getUsers } from "../../redux/users/thunks";
-import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import ImageSlider from "../Shared/ImageSlider/ImageSlider";
 import Modal from "../Shared/Modal/Modal";
 import ButtonLoader from "../Shared/Loader/ButtonLoader";
 import { AnimatePresence, motion } from "framer-motion";
 import Input from "../Shared/Input/Input";
+import { getAuth } from "firebase/auth";
 
 const PostSalon = () => {
+  const auth = getAuth();
+
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imageList, setImageList] = useState([]);
@@ -35,33 +35,8 @@ const PostSalon = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
-
-  const usersList = useSelector((state) => state.users.list);
-
-  const isLogged = () => {
-    const user = getAuth();
-    if (user.currentUser == null) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-  const getUserData = () => {
-    const auth = getAuth();
-    if (isLogged()) {
-      const user = usersList.find(
-        (user) => user.firebaseUid === auth.currentUser.uid
-      );
-      return user;
-    } else {
-      return false;
-    }
-  };
-
-  const userData = getUserData();
+  let userData = window.localStorage.getItem("user");
+  userData = JSON.parse(userData);
 
   const salonSchema = Joi.object({
     name: Joi.string().required().min(3).max(30),
@@ -116,26 +91,38 @@ const PostSalon = () => {
   };
 
   const uploadImg = () => {
-    uploadBytes(storageRef, image)
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref)
-          .then((url) => {
-            setImageList((prev) => [...prev, url]);
-            setUrl((prev) => [...prev, { url }]);
+    auth
+      ? uploadBytes(storageRef, image)
+          .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                setImageList((prev) => [...prev, url]);
+                setUrl((prev) => [...prev, { url }]);
+              })
+              .catch((error) => {
+                alert(error.message);
+              });
           })
           .catch((error) => {
             alert(error.message);
-          });
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
+          })
+      : "";
   };
 
   if (image) {
     uploadImg();
     setImage(null);
   }
+
+  const pushSalonToLS = (res1, res2) => {
+    const index = res2.data.ownSalons.length - 1;
+    userData.ownSalons.push({
+      id: res1.data,
+      addedOn: res2.data.ownSalons[index].addedOn,
+      _id: res2.data.ownSalons[index]._id,
+    });
+    window.localStorage.setItem("user", JSON.stringify(userData));
+  };
 
   const handleSalonAdd = (data) => {
     if (userData) {
@@ -158,9 +145,8 @@ const PostSalon = () => {
             if (!response.error) {
               setLoading(false);
               setOpenModal(true);
-              setChildren(`${response.name} agregado con exito`);
-            } else {
-              setLoading(false);
+              setChildren(`${response[0].data.name} agregado con exito`);
+              pushSalonToLS(response[0], response[1]);
             }
           });
         } catch (error) {
@@ -182,7 +168,7 @@ const PostSalon = () => {
         custom={direction}
         key={showSalonData}
       >
-        <h2 className={showSalonData == 2 && styles.postH2Hidden}>
+        <h2 className={showSalonData == 2 ? styles.postH2Hidden : ""}>
           Publica tu salon
         </h2>
         <div
@@ -316,7 +302,7 @@ const PostSalon = () => {
           <div
             className={showSalonData == 3 ? styles.submit : styles.submitHidden}
           >
-            <input type="submit" onClick={handleSalonAdd} />
+            <input type="submit" />
           </div>
         </form>
         <div className={styles.postPageButtons}>
@@ -325,7 +311,7 @@ const PostSalon = () => {
               setShowSalonData(showSalonData - 1);
               setDirection(1);
             }}
-            className={showSalonData == 1 && styles.backButtonHidden}
+            className={showSalonData == 1 ? styles.backButtonHidden : ""}
           >
             Atras
           </button>
@@ -334,7 +320,7 @@ const PostSalon = () => {
               setShowSalonData(showSalonData + 1);
               setDirection(-1);
             }}
-            className={showSalonData == 3 && styles.nextButtonHidden}
+            className={showSalonData == 3 ? styles.nextButtonHidden : ""}
           >
             Siguiente
           </button>

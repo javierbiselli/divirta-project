@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./getSalons.module.css";
 import Salon from "../Shared/Salon/Salon";
 import { getSalons } from "../../redux/salons/thunks";
-import { getUsers } from "../../redux/users/thunks";
 import Loader from "../Shared/Loader/Loader";
 
 const GetSalons = () => {
@@ -11,7 +10,6 @@ const GetSalons = () => {
 
   useEffect(() => {
     dispatch(getSalons());
-    dispatch(getUsers());
   }, []);
 
   const isLoading = useSelector((state) => state.salons.isLoading);

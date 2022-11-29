@@ -41,6 +41,11 @@
   height: 35px;
 }
 
+.submitRegisterButtonContainer {
+  width: 97%;
+  text-align: center;
+}
+
 @media only screen and (min-width: 768px) {
   .registerFormContainer {
     padding: 60px 20px;
