@@ -24,4 +24,6 @@ log:
 
 09/11/2022 - Adding multiple images to salons working. Added slider for images
 
+28/11/2022 - Reduced api requests to minimum by handling salon and user information though local storage (getUsers api call only gets called on manual refresh)
+
 [Go to app](https://divirta-project.vercel.app/).
