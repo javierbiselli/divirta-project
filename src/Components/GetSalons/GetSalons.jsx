@@ -15,6 +15,8 @@ const GetSalons = () => {
   const isLoading = useSelector((state) => state.salons.isLoading);
   const listSalons = useSelector((state) => state.salons.list);
 
+  window.localStorage.setItem("salons", JSON.stringify(listSalons));
+
   return (
     <>
       {isLoading ? (

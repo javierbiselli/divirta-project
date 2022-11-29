@@ -49,14 +49,20 @@ const NavBar = () => {
                 <ul>
                   <Link to="/">
                     <li>
-                      <i className="fa-solid fa-magnifying-glass"></i>
-                      Buscar salones
+                      <i className="fa-solid fa-cake-candles"></i>
+                      Salones populares
                     </li>
                   </Link>
                   <Link to="/post">
                     <li>
                       <i className="fa-regular fa-square-plus"></i>
                       Publica tu salon
+                    </li>
+                  </Link>
+                  <Link to="/search">
+                    <li>
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                      Buscar salones
                     </li>
                   </Link>
                 </ul>
