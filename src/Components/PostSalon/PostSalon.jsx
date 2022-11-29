@@ -42,7 +42,7 @@ const PostSalon = () => {
     name: Joi.string().required().min(3).max(30),
     tel: Joi.number().required().max(99999999999),
     address: Joi.string().required(),
-    rate: Joi.number().required(),
+    rate: Joi.number().required().min(1).max(10),
     facebook: Joi.string().required(),
     instagram: Joi.string().required(),
     whatsapp: Joi.number().required(),
@@ -236,7 +236,7 @@ const PostSalon = () => {
               <Input
                 type={"text"}
                 name={"rate"}
-                placeholder={"Rating (no va a ir mas)"}
+                placeholder={"Rating (no va a ir mas) (min 1 max 10)"}
                 register={register}
                 error={errors.rate?.message}
               />

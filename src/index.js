@@ -10,6 +10,7 @@ import Register from "./Components/Register/Register";
 import PostSalon from "./Components/PostSalon/PostSalon";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import ProtectedRoutes from "./Components/Shared/ProtectedRoutes/ProtectedRoutes";
+import Search from "./Components/Search/Search";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,7 @@ root.render(
           <Route element={<ProtectedRoutes />}>
             <Route path="/post" element={<PostSalon />} />
             <Route path="/user/" element={<UserProfile />} />
+            <Route path="/search" element={<Search />} />
           </Route>
         </Routes>
       </Layout>
