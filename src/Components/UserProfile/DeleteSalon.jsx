@@ -49,21 +49,25 @@ const DeleteSalon = ({ userData }) => {
     const confirmar = confirm("Estas seguro de que queres borrar el salon?");
     if (confirmar) {
       setLoading(true);
-      dispatch(deleteSalon(salonId, userData._id)).then(
-        () => {
+      try {
+        dispatch(deleteSalon(salonId, userData._id)).then((response) => {
           setLoading(false);
-          alert("Salon borrado correctamente");
-          setSalonId(null);
-          setOpenModal(false);
-          deleteSalonFromLS();
-        },
-        () => {
-          setLoading(false);
-          setOpenModal(true);
-          setChildren("ocurrio un error");
-          setSalonId(null);
-        }
-      );
+          if (!response[0].error && !response[1].error) {
+            alert("Salon borrado correctamente");
+            setSalonId(null);
+            setOpenModal(false);
+            deleteSalonFromLS();
+          } else {
+            alert(`${response.message}`);
+            if (response.message == "Este salon no existe") {
+              deleteSalonFromLS();
+            }
+          }
+        });
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
     } else {
       setSalonId(null);
     }
@@ -75,11 +79,16 @@ const DeleteSalon = ({ userData }) => {
       dispatch(editSalon(data, selectedSalon.id._id)).then((response) => {
         setLoading(false);
         if (!response.error) {
-          alert(`${response.name} editado con exito`);
+          console.log("despues", response);
+          alert(`${response.data.name} editado con exito`);
           setOpenModal(false);
-          editSalonFromLS(response);
+          editSalonFromLS(response.data);
         } else {
           alert(`${response.message}`);
+          if (response.message == "El salon no existe") {
+            deleteSalonFromLS();
+            setOpenModal(false);
+          }
         }
       });
     } catch (error) {

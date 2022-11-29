@@ -80,8 +80,8 @@ export const deleteSalon = (_id, userId) => {
           message: res2.error,
         };
       }
-      dispatch(deleteSalonFromUserSuccess(res.data));
-      return res.data;
+      dispatch(deleteSalonFromUserSuccess(res2.data));
+      return [res, res2];
     } catch (error) {
       dispatch(deleteSalonError(error.toString()));
       return {
@@ -187,7 +187,7 @@ export const editSalon = (salon, _id) => {
         throw res.message;
       }
       dispatch(editSalonSuccess(res.data));
-      return res.data;
+      return res;
     } catch (error) {
       dispatch(editSalonError(error.toString()));
       return {
