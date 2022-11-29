@@ -147,8 +147,8 @@ export const addSalon = (salon, url, userId) => {
           message: res2.error,
         };
       }
-      dispatch(addSalonToUserSuccess(res.data));
-      return res.data;
+      dispatch(addSalonToUserSuccess(res2.data));
+      return [res, res2];
     } catch (error) {
       dispatch(addSalonError(error.toString()));
       return {

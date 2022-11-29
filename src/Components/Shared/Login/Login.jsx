@@ -7,78 +7,16 @@ import { logOut } from "../../../redux/auth/thunks";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import ButtonLoader from "../Loader/ButtonLoader";
 
-const Login = (props) => {
+const Login = () => {
   const [userInput] = useState("");
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
   const usersList = useSelector((state) => state.users.list);
-  const isLoading = useSelector((state) => state.users.isLoading);
-
-  const { handleSubmit, register } = useForm({
-    mode: "onChange",
-    defaultValues: {
-      email: userInput.email,
-      password: userInput.password,
-    },
-  });
-
-  const onSubmit = async (data) => {
-    try {
-      const user = await dispatch(login(data));
-      if (user.type === "LOGIN_ERROR") {
-        alert("Email o password incorrectos");
-        throw user.payload;
-      }
-      switch (user.payload.role) {
-        case "USER":
-          navigate("/");
-          alert("Te logueaste con exito");
-          return data;
-        default:
-          break;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const onLogOut = async () => {
-    const resp = await dispatch(logOut());
-    isLogged();
-    navigate("/");
-    if (!resp.error) {
-      alert(resp.message);
-    }
-  };
-
-  const isLogged = () => {
-    const user = getAuth();
-    if (user.currentUser == null) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
-  // const auth = getAuth();
-  // console.log(auth);
-
-  // const isLogged = () => {
-  //   const auth = getAuth();
-  //   onAuthStateChanged(auth, (user) => {
-  //     console.log("user", user);
-  //     const uid = user.uid;
-  //     if (user) {
-  //       console.log(uid);
-  //       let user = usersList.find((user) => user.firebaseUid == uid);
-  //       return user;
-  //       // ...
-  //     } else {
-  //       return false;
-  //     }
-  //   });
-  // };
 
   let getLoggedUserData = () => {
     const auth = getAuth();
@@ -89,13 +27,73 @@ const Login = (props) => {
     }
   };
 
+  const { handleSubmit, register } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      email: userInput.email,
+      password: userInput.password,
+    },
+  });
+
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const user = await dispatch(login(data));
+      if (
+        user.payload ===
+          "FirebaseError: Firebase: The password is invalid o… does not have a password. (auth/wrong-password)." ||
+        user.payload ===
+          "FirebaseError: Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."
+      ) {
+        alert("Email o password incorrectos o el usuario no existe");
+        setLoading(false);
+        throw user.payload;
+      } else if (
+        user.payload ===
+        "FirebaseError: Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+      ) {
+        alert(
+          "Intentaste loguearte sin exito demasiadas veces, si olvidaste tu contraseña podes recuperarla haciendo click en 'olvide mi contraseña' o espera un rato para volver a loguearte"
+        );
+        setLoading(false);
+        throw user.payload;
+      } else {
+        setLoading(false);
+      }
+      switch (user.payload.role) {
+        case "USER":
+          navigate("/");
+          alert("Te logueaste con exito");
+          window.localStorage.setItem(
+            "user",
+            JSON.stringify(getLoggedUserData())
+          );
+          setLoading(false);
+          return data;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+  const onLogOut = async () => {
+    const resp = await dispatch(logOut());
+    window.localStorage.removeItem("user");
+    navigate("/");
+    if (!resp.error) {
+      alert(resp.message);
+    }
+  };
+
+  const lsUserData = JSON.parse(window.localStorage.getItem("user"));
+
   return (
     <>
-      {isLoading && props.showNav ? (
-        <span>CARGANDO...</span>
-      ) : getLoggedUserData() ? (
+      {lsUserData ? (
         <div className={styles.containerLogged}>
-          <h2>Hola {`${getLoggedUserData().name + "!"}`}</h2>
+          <h2>Hola {`${lsUserData.name + "!"}`}</h2>
           <Link to={`/user`}>Ver mi perfil</Link>
           <div className={styles.logOutContainer}>
             <button onClick={() => onLogOut()} className={styles.logOutButton}>
@@ -105,29 +103,28 @@ const Login = (props) => {
         </div>
       ) : (
         <div className={styles.loginContainer}>
+          <ButtonLoader loading={loading} />
           <div className={styles.register}>
-            <h3>No tenes una cuenta?</h3>
-            <Link to="/register">Registrate!</Link>
+            <Link to="/register">Registrate</Link> para ver todas las
+            funcionalidades de la app
           </div>
           <div className={styles.log}>
-            <h3>Si ya tenes</h3>
-            <p>Logueate aca</p>
+            <p>o logueate aca:</p>
           </div>
           <form>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Email..."
               name="email"
               {...register("email")}
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Password..."
               name="password"
               {...register("password")}
             />
             <div className={styles.buttons}>
-              <Link to="/forgotpassword">No te acordas tu contraseña?</Link>
               <input
                 type="submit"
                 id="submitLogIn"

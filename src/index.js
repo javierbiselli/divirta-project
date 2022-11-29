@@ -8,8 +8,8 @@ import Layout from "./Components/Shared/Layout/Layout";
 import GetSalons from "./Components/GetSalons/GetSalons";
 import Register from "./Components/Register/Register";
 import PostSalon from "./Components/PostSalon/PostSalon";
-import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import UserProfile from "./Components/UserProfile/UserProfile";
+import ProtectedRoutes from "./Components/Shared/ProtectedRoutes/ProtectedRoutes";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,9 +19,10 @@ root.render(
         <Routes>
           <Route exact path="/" element={<GetSalons />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/post" element={<PostSalon />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/user/" element={<UserProfile />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/post" element={<PostSalon />} />
+            <Route path="/user/" element={<UserProfile />} />
+          </Route>
         </Routes>
       </Layout>
     </Provider>

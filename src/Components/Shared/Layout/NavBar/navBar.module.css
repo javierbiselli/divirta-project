@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 60%;
   max-width: 250px;
-  padding: 10px;
   position: fixed;
   height: 100vh;
   font-size: 14px;
@@ -19,6 +18,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100% - 80px);
+  padding: 10px;
 }
 
 .menuButtonContainer {
@@ -73,6 +73,7 @@ a {
   .containerNav {
     position: sticky;
     max-width: 220px;
+    z-index: 5;
   }
 
   li {

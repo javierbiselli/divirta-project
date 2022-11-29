@@ -9,9 +9,8 @@
   top: 80px;
   left: 0;
   overflow: hidden;
-  z-index: 50;
   background-color: #0000009f;
-  z-index: 20000;
+  z-index: 1000;
 }
 
 .buttonLoader {
@@ -23,7 +22,7 @@
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-  z-index: 20000;
+  z-index: 1000;
 }
 
 @keyframes rotation {

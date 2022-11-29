@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { getAuth } from "firebase/auth";
 import styles from "./navBar.module.css";
 import { Link } from "react-router-dom";
 import Login from "../../Login/Login";
 import { AnimatePresence, motion } from "framer-motion";
 
 const NavBar = () => {
-  const auth = getAuth();
-
   const [showNav, setShowNav] = useState(
     window.innerWidth > 767 ? true : false
   );
@@ -24,7 +21,7 @@ const NavBar = () => {
           <i className="fa-solid fa-bars"></i>
         </button>
       </div>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {showNav ? (
           <motion.nav
             initial={{
@@ -56,22 +53,16 @@ const NavBar = () => {
                       Buscar salones
                     </li>
                   </Link>
-                  {auth.currentUser ? (
-                    <Link to="/post">
-                      <li>
-                        <i className="fa-regular fa-square-plus"></i>
-                        Publica tu salon
-                      </li>
-                    </Link>
-                  ) : (
-                    <Link to="/register">
-                      <li>Publica tu salon</li>
-                    </Link>
-                  )}
+                  <Link to="/post">
+                    <li>
+                      <i className="fa-regular fa-square-plus"></i>
+                      Publica tu salon
+                    </li>
+                  </Link>
                 </ul>
               </div>
               <div className={styles.headerBar}></div>
-              <Login showNav={showNav} setShowNav={setShowNav} />
+              <Login />
             </div>
           </motion.nav>
         ) : (
