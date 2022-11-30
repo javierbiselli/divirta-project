@@ -41,11 +41,11 @@ const Login = () => {
       const user = await dispatch(login(data));
       if (
         user.payload ===
-          "FirebaseError: Firebase: The password is invalid o… does not have a password. (auth/wrong-password)." ||
+          "FirebaseError: Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)." ||
         user.payload ===
           "FirebaseError: Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."
       ) {
-        alert("Email o password incorrectos o el usuario no existe");
+        alert("Email o password incorrectos");
         setLoading(false);
         throw user.payload;
       } else if (
