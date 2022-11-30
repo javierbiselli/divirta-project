@@ -8,6 +8,7 @@
 - Publish multiple party rooms with multiple photos
 - View and edit your profile
 - Delete or edit your party room data
+- Search party rooms by name, address or description
 
 Future features to develop:
 - Review system for party rooms with ratings and comments (similar to Google)
@@ -25,5 +26,7 @@ log:
 09/11/2022 - Adding multiple images to salons working. Added slider for images
 
 28/11/2022 - Reduced api requests to minimum by handling salon and user information though local storage (getUsers api call only gets called on manual refresh)
+
+29/11/2022 - Added search bar
 
 [Go to app](https://divirta-project.vercel.app/).
