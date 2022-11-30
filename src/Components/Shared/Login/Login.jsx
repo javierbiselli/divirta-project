@@ -39,7 +39,6 @@ const Login = () => {
     setLoading(true);
     try {
       const user = await dispatch(login(data));
-      console.log(user);
       if (
         user.payload ===
           "FirebaseError: Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)." ||
