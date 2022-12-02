@@ -27,11 +27,11 @@ const GetSalons = () => {
           {listSalons.map((salons) => (
             <Salon
               key={salons._id}
+              id={salons._id}
               name={salons.name}
-              rate={salons.rate}
               tel={salons.tel}
               salonId={salons._id}
-              img={salons.images[0].url.map((urls) => urls.url)}
+              img={salons.images.map((images) => images.url)}
               address={salons.address}
               description={salons.description}
               email={salons.email}
@@ -39,7 +39,15 @@ const GetSalons = () => {
               instagram={salons.instagram}
               whatsapp={salons.whatsapp}
               owner={salons.owner.name + " " + salons.owner.last_name}
-              topComment={"falta hacer la parte de reviews"}
+              comments={salons.comments.map((content) => {
+                return [
+                  content.commenter.name + " " + content.commenter.last_name,
+                  content.comment,
+                  content.rating,
+                ];
+              })}
+              topComment={salons.comments[0]?.comment}
+              ratings={salons.comments.map((comment) => comment.rating)}
             />
           ))}
           <div className={styles.tableContainer}></div>

@@ -219,7 +219,12 @@ const DeleteSalon = ({ userData }) => {
           <div key={salons._id} className={styles.deleteSalon}>
             <div className={styles.deleteSalonBox}>
               <div>Salon: {salons.id.name}</div>
-              <div>Agregado el {salons.addedOn.slice(0, 10)}</div>
+              <div>
+                Agregado el{" "}
+                {salons.addedOn.length == 20
+                  ? salons.addedOn.slice(0, 10)
+                  : salons.addedOn.slice(0, 9)}
+              </div>
             </div>
             <button
               onClick={() => {

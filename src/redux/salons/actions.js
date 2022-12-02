@@ -2,6 +2,9 @@ import {
   GET_SALONS_SUCCESS,
   GET_SALONS_PENDING,
   GET_SALONS_ERROR,
+  GET_SALON_SUCCESS,
+  GET_SALON_PENDING,
+  GET_SALON_ERROR,
   DELETE_SALON_SUCCESS,
   DELETE_SALON_PENDING,
   DELETE_SALON_ERROR,
@@ -30,6 +33,19 @@ export const getSalonsSuccess = (salons) => ({
 
 export const getSalonsError = () => ({
   type: GET_SALONS_ERROR,
+});
+
+export const getSalonPending = () => ({
+  type: GET_SALON_PENDING,
+});
+
+export const getSalonSuccess = (salon) => ({
+  type: GET_SALON_SUCCESS,
+  payload: salon,
+});
+
+export const getSalonError = () => ({
+  type: GET_SALON_ERROR,
 });
 
 export const deleteSalonPending = () => ({

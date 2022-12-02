@@ -2,6 +2,9 @@ import {
   GET_SALONS_SUCCESS,
   GET_SALONS_PENDING,
   GET_SALONS_ERROR,
+  GET_SALON_SUCCESS,
+  GET_SALON_PENDING,
+  GET_SALON_ERROR,
   DELETE_SALON_SUCCESS,
   DELETE_SALON_PENDING,
   DELETE_SALON_ERROR,
@@ -21,6 +24,7 @@ import {
 
 const initialState = {
   list: [],
+  salon: {},
   isLoading: false,
   error: false,
 };
@@ -39,6 +43,23 @@ export const salonsReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case GET_SALONS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
+    case GET_SALON_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case GET_SALON_SUCCESS:
+      return {
+        ...state,
+        salon: action.payload,
+        isLoading: false,
+      };
+    case GET_SALON_ERROR:
       return {
         ...state,
         isLoading: false,

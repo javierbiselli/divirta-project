@@ -17,6 +17,9 @@ import {
   deleteSalonFromUserPending,
   deleteSalonFromUserSuccess,
   deleteSalonFromUserError,
+  getSalonPending,
+  getSalonSuccess,
+  getSalonError,
 } from "./actions";
 
 export const getSalons = () => {
@@ -33,18 +36,23 @@ export const getSalons = () => {
   };
 };
 
-export const deleteSalon = (_id, userId) => {
-  // return async (dispatch) => {
-  //   dispatch(deleteSalonPending());
-  //   try {
-  //     await fetch(`${process.env.REACT_APP_API_URL}/salons/${_id}`, {
-  //       method: "DELETE",
-  //     });
-  //     dispatch(deleteSalonSuccess(_id));
-  //   } catch (error) {
-  //     dispatch(deleteSalonError(error.toString()));
-  //   }
+export const getSalonById = (salonId) => {
+  return async (dispatch) => {
+    dispatch(getSalonPending());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/salons/${salonId}`
+      );
+      const res = await response.json();
+      dispatch(getSalonSuccess(res.data));
+      return response.data;
+    } catch (error) {
+      dispatch(getSalonError(error.toString()));
+    }
+  };
+};
 
+export const deleteSalon = (_id, userId) => {
   return async (dispatch) => {
     dispatch(deleteSalonPending());
     try {
@@ -107,7 +115,7 @@ export const addSalon = (salon, url, userId) => {
           tel: salon.tel,
           address: salon.address,
           rate: salon.rate,
-          images: [{ url }],
+          images: url,
           facebook: salon.facebook,
           instagram: salon.instagram,
           whatsapp: salon.whatsapp,
