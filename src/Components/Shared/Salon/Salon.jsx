@@ -98,7 +98,8 @@ const Salon = (props) => {
         </div>
         <div className={styles.rateAndInfo}>
           <h4>
-            Puntuacion: {props.ratings[0] ? calculateProm() : "sin puntuacion"}
+            Puntuacion:{" "}
+            <span>{props.ratings[0] ? calculateProm() : "sin puntuacion"}</span>
           </h4>
           <a
             className={styles.moreInfoButton}

@@ -93,8 +93,10 @@ h3 {
 }
 
 .moreInfoButton {
+  width: 45%;
   cursor: pointer;
   color: blue;
+  text-align: end;
 }
 
 .sectionModal {
