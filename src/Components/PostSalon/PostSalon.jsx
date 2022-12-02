@@ -22,7 +22,7 @@ const PostSalon = () => {
   const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imageList, setImageList] = useState([]);
-  const [url, setUrl] = useState([]);
+  const [url, setUrl] = useState("");
 
   const [openModal, setOpenModal] = useState(false);
   const [children, setChildren] = useState("");
@@ -179,7 +179,8 @@ const PostSalon = () => {
           }
         >
           <div className={styles.containerUploadImg}>
-            <b>Fotos (hasta 6):</b>
+            <b>Fotos (hasta 6): </b>
+            preferiblemente horizontales
             <input
               type="file"
               name="file"
