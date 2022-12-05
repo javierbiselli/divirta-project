@@ -20,6 +20,12 @@ import {
   DELETE_SALON_FROM_USER_SUCCESS,
   DELETE_SALON_FROM_USER_PENDING,
   DELETE_SALON_FROM_USER_ERROR,
+  ADD_COMMENTTOSALON_SUCCESS,
+  ADD_COMMENTTOSALON_PENDING,
+  ADD_COMMENTTOSALON_ERROR,
+  DELETE_COMMENTFROMSALON_SUCCESS,
+  DELETE_COMMENTFROMSALON_PENDING,
+  DELETE_COMMENTFROMSALON_ERROR,
 } from "./constants";
 
 export const getSalonsPending = () => ({
@@ -111,4 +117,30 @@ export const deleteSalonFromUserSuccess = (user) => ({
 
 export const deleteSalonFromUserError = () => ({
   type: DELETE_SALON_FROM_USER_ERROR,
+});
+
+export const addCommentToSalonPending = () => ({
+  type: ADD_COMMENTTOSALON_PENDING,
+});
+
+export const addCommentToSalonSuccess = (comment) => ({
+  type: ADD_COMMENTTOSALON_SUCCESS,
+  payload: comment,
+});
+
+export const addCommentToSalonError = () => ({
+  type: ADD_COMMENTTOSALON_ERROR,
+});
+
+export const deleteCommentFromSalonPending = () => ({
+  type: DELETE_COMMENTFROMSALON_PENDING,
+});
+
+export const deleteCommentFromSalonSuccess = (comment) => ({
+  type: DELETE_COMMENTFROMSALON_SUCCESS,
+  payload: comment,
+});
+
+export const deleteCommentFromSalonError = () => ({
+  type: DELETE_COMMENTFROMSALON_ERROR,
 });

@@ -20,6 +20,12 @@ import {
   getSalonPending,
   getSalonSuccess,
   getSalonError,
+  addCommentToSalonPending,
+  addCommentToSalonSuccess,
+  addCommentToSalonError,
+  // deleteCommentFromSalonPending,
+  // deleteCommentFromSalonSuccess,
+  // deleteCommentFromSalonError,
 } from "./actions";
 
 export const getSalons = () => {
@@ -167,12 +173,12 @@ export const addSalon = (salon, url, userId) => {
   };
 };
 
-export const editSalon = (salon, _id) => {
+export const editSalon = (salon, id) => {
   return async (dispatch) => {
     dispatch(editSalonPending());
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/salons/${_id}`,
+        `${process.env.REACT_APP_API_URL}/salons/${id}`,
         {
           method: "PUT",
           headers: {
@@ -205,3 +211,61 @@ export const editSalon = (salon, _id) => {
     }
   };
 };
+
+export const addCommentToSalon = (id, fullComment) => {
+  return async (dispatch) => {
+    dispatch(addCommentToSalonPending());
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/salons/${id}/comments/add`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            comments: [fullComment],
+          }),
+        }
+      );
+      const res = await response.json();
+      if (res.error) {
+        throw res.message;
+      }
+      dispatch(addCommentToSalonSuccess(res.data));
+      return res;
+    } catch (error) {
+      dispatch(addCommentToSalonError(error.toString()));
+      return {
+        error: true,
+        message: error,
+      };
+    }
+  };
+};
+
+// export const deleteCommentFromSalon = (salonId, commentId) => {
+//   return async (dispatch) => {
+//     dispatch(deleteCommentFromSalonPending());
+//     try {
+//       const response = await fetch(
+//         `${process.env.REACT_APP_API_URL}/salons/${salonId}/comments/delete/${commentId}`,
+//         {
+//           method: "DELETE",
+//         }
+//       );
+//       const res = await response.json();
+//       if (res.error) {
+//         throw res.message;
+//       }
+//       dispatch(deleteCommentFromSalonSuccess(res.data));
+//       return res;
+//     } catch (error) {
+//       dispatch(deleteCommentFromSalonError(error.toString()));
+//       return {
+//         error: true,
+//         message: error,
+//       };
+//     }
+//   };
+//	};

@@ -20,6 +20,12 @@ import {
   DELETE_SALON_FROM_USER_SUCCESS,
   DELETE_SALON_FROM_USER_PENDING,
   DELETE_SALON_FROM_USER_ERROR,
+  ADD_COMMENTTOSALON_PENDING,
+  ADD_COMMENTTOSALON_SUCCESS,
+  ADD_COMMENTTOSALON_ERROR,
+  DELETE_COMMENTFROMSALON_SUCCESS,
+  DELETE_COMMENTFROMSALON_PENDING,
+  DELETE_COMMENTFROMSALON_ERROR,
 } from "./constants";
 
 const initialState = {
@@ -156,6 +162,47 @@ export const salonsReducer = (state = initialState, action) => {
       };
 
     case DELETE_SALON_FROM_USER_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
+
+    case ADD_COMMENTTOSALON_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ADD_COMMENTTOSALON_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        list: state.list.map((a) => {
+          if (a._id === action.payload._id) {
+            return action.payload;
+          }
+          return a;
+        }),
+      };
+    case ADD_COMMENTTOSALON_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
+
+    case DELETE_COMMENTFROMSALON_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case DELETE_COMMENTFROMSALON_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        list: state.list.filter((a) => a._id !== action.payload),
+      };
+    case DELETE_COMMENTFROMSALON_ERROR:
       return {
         ...state,
         isLoading: false,

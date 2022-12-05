@@ -48,6 +48,7 @@
   color: white;
   border: none;
   height: 35px;
+  cursor: pointer;
 }
 .postSalonContainer form h4 {
   width: 100%;
