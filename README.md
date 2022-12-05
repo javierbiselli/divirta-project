@@ -9,9 +9,12 @@
 - View and edit your profile
 - Delete or edit your party room data
 - Search party rooms by name, address or description
+- Add your review to party rooms
+
+Developing...:
+- Review system for party rooms with ratings and comments (similar to Google)
 
 Future features to develop:
-- Review system for party rooms with ratings and comments (similar to Google)
 - Party animator/entertainer, party room owner, and common user public profiles
 - UI UX improvements
 
@@ -28,5 +31,7 @@ log:
 28/11/2022 - Reduced api requests to minimum by handling salon and user information though local storage (getUsers api call only gets called on manual refresh)
 
 29/11/2022 - Added search bar
+
+05/12/2022 - Added reviews (comments and rating)
 
 [Go to app](https://divirta-project.vercel.app/).
