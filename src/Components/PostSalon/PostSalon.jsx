@@ -42,7 +42,6 @@ const PostSalon = () => {
     name: Joi.string().required().min(3).max(30),
     tel: Joi.number().required().max(99999999999),
     address: Joi.string().required(),
-    rate: Joi.number().required().min(1).max(10),
     facebook: Joi.string().required(),
     instagram: Joi.string().required(),
     whatsapp: Joi.number().required(),
@@ -133,7 +132,6 @@ const PostSalon = () => {
         errors.email ||
         errors.facebook ||
         errors.instagram ||
-        errors.rate ||
         errors.tel ||
         errors.whatsapp
       ) {
@@ -231,15 +229,6 @@ const PostSalon = () => {
                 placeholder={"Direccion (ejemplo: Avenida Mendoza 1234)"}
                 register={register}
                 error={errors.address?.message}
-              />
-            </div>
-            <div className={styles.postInputContainer}>
-              <Input
-                type={"text"}
-                name={"rate"}
-                placeholder={"Rating (no va a ir mas) (min 1 max 10)"}
-                register={register}
-                error={errors.rate?.message}
               />
             </div>
             <h4 className={styles.h4Space}>Redes sociales del salon</h4>

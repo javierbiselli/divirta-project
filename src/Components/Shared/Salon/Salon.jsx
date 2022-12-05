@@ -12,13 +12,22 @@ const Salon = (props) => {
   const imageList = props.img.map((images) => images);
 
   const calculateProm = () => {
+    const rates = props.comments.map((rate) => rate.rating);
     let sum = 0;
-    for (let n of props.ratings) {
-      sum += n;
+    const ratings = rates;
+    console.log("ratings", ratings);
+    if (ratings.length > 0) {
+      for (let n of ratings) {
+        sum += n;
+      }
+      sum = sum / ratings.length;
+      return sum;
+    } else {
+      return false;
     }
-    sum = sum / props.ratings.length;
-    return sum;
   };
+
+  console.log("props comments", props.comments);
 
   const setContent = () => {
     setCloseButton("Cerrar");
@@ -35,7 +44,7 @@ const Salon = (props) => {
         </div>
         <div className={styles.rateAndInfo}>
           <h4>
-            Puntuacion: {props.ratings[0] ? calculateProm() : "sin puntuacion"}
+            Puntuacion: {calculateProm() ? calculateProm() : "sin puntuacion"}
           </h4>
         </div>
         <div className={styles.info}>
@@ -66,17 +75,27 @@ const Salon = (props) => {
         </div>
         <div className={styles.commentsContainer}>
           <b>Comentarios:</b>
-          {props.comments[0] ? (
-            props.comments.map((comments) => {
+          {props.comments.length > 0 ? (
+            props.comments.map((content) => {
+              console.log(content);
               return (
                 <div
-                  key={comments[0]}
+                  key={content._id}
                   className={styles.singleCommentContainer}
                 >
-                  <div className={styles.commentOwner}>{comments[0]}</div>
-                  <div className={styles.commentContent}>{comments[1]}</div>
+                  <div className={styles.commentOwner}>
+                    {content.commenter.name + " " + content.commenter.last_name}
+                    <span className={styles.commentDate}>
+                      (
+                      {content.date.length == 20
+                        ? content.date.slice(0, 10)
+                        : content.date.slice(0, 9)}
+                      )
+                    </span>
+                  </div>
+                  <div className={styles.commentContent}>{content.comment}</div>
                   <div className={styles.commentRate}>
-                    Puntaje: {comments[2]}
+                    Puntaje: {content.rating}
                   </div>
                 </div>
               );
@@ -99,7 +118,7 @@ const Salon = (props) => {
         <div className={styles.rateAndInfo}>
           <h4>
             Puntuacion:{" "}
-            <span>{props.ratings[0] ? calculateProm() : "sin puntuacion"}</span>
+            <span>{calculateProm() ? calculateProm() : "sin puntuacion"}</span>
           </h4>
           <a
             className={styles.moreInfoButton}

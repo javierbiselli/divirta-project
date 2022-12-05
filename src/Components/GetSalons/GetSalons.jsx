@@ -39,15 +39,8 @@ const GetSalons = () => {
               instagram={salons.instagram}
               whatsapp={salons.whatsapp}
               owner={salons.owner.name + " " + salons.owner.last_name}
-              comments={salons.comments.map((content) => {
-                return [
-                  content.commenter.name + " " + content.commenter.last_name,
-                  content.comment,
-                  content.rating,
-                ];
-              })}
+              comments={salons.comments.filter((comment) => comment.rating)}
               topComment={salons.comments[0]?.comment}
-              ratings={salons.comments.map((comment) => comment.rating)}
             />
           ))}
           <div className={styles.tableContainer}></div>
