@@ -1,10 +1,11 @@
 import styles from "./header.module.css";
+import logo from "../../../../Resources/img/mainLogoNoBG.png";
 
 const Header = () => {
   return (
     <>
-      <header className={styles.container}>
-        <h1>DIVIRTA</h1>
+      <header className={styles.headerContainer}>
+        <img src={logo} alt="divirta" />
       </header>
     </>
   );
